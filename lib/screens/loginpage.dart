@@ -1,5 +1,5 @@
-import 'package:avatar_view/avatar_view.dart';
 import 'package:firebase_login_project/service/auth.dart';
+import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
 
   var controllerEmail = TextEditingController();
   var controllerPassword = TextEditingController();
+  bool wrongVisibility = false;
+  Color secondColor = ColorItems.mainColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +45,16 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(onPrimary: Colors.lightBlueAccent, padding: const EdgeInsets.all(15)),
+        style: ElevatedButton.styleFrom(primary: secondColor, padding: const EdgeInsets.all(15)),
         onPressed: () {
           _authService.signIn(controllerEmail.text, controllerPassword.text).then((value) {
-            return Navigator.pushReplacementNamed(context, '/homePage');
+            if (value != null) {
+              Navigator.pushReplacementNamed(context, '/homePage');
+            } else {
+              setState(() {
+                wrongVisibility = true;
+              });
+            }
           });
         },
         child: const Text(
@@ -64,34 +72,55 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {},
     );
 
-    final gmailSign = TextButton(onPressed: () {}, child: Text("Sign with Gmail"));
+    final newUserLabel = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      const Text("Don't have an Account?"),
+      TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/newUserPage');
+          },
+          child: const Text("Sign Up"))
+    ]);
+
+    final gmailSign = TextButton(
+      onPressed: () {},
+      child: const Text("Sign with Gmail"),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: ListView(
           shrinkWrap: false,
-          padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 100, top: 140),
+          padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 100),
           children: <Widget>[
-            const Icon(
-              Icons.person,
-              size: 100,
-            ),
+            Expanded(child: SizedBox(height: 70)),
+            Image.asset('assets/loginpageimage.png'),
             const SizedBox(height: 20.0),
             email,
             const SizedBox(height: 8.0),
             password,
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 5.0),
+            Visibility(
+                visible: wrongVisibility,
+                child: const Text(
+                  "Wrong email or password",
+                  style: TextStyle(color: Colors.red),
+                )),
             loginButton,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
               children: [
-                Icon(Icons.mail_outline),
-                gmailSign,
-                Icon(Icons.lock_reset),
-                forgotLabel,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.mail_outline),
+                    gmailSign,
+                    const Icon(Icons.lock_reset),
+                    forgotLabel,
+                  ],
+                ),
+                newUserLabel,
               ],
-            )
+            ),
           ],
         ),
       ),

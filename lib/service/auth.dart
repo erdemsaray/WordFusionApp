@@ -7,17 +7,20 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<User?> signIn(String email, String password) async {
-    var user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-    if (user == null) {
+    try {
+      var user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      print("SONUC: ${user.user}");
+      return user.user;
+    } catch (e) {
       return null;
     }
-    return user.user;
   }
 
-  signAuth() async {
+  signOut() async {
     return await _auth.signOut();
   }
+
+  
 
   Future<User?> createPerson(String email, String password) async {
     var user = await _auth.createUserWithEmailAndPassword(email: email, password: password);

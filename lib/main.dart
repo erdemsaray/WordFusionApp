@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_login_project/screens/homepage.dart';
 import 'package:firebase_login_project/screens/loginpage.dart';
+import 'package:firebase_login_project/screens/newuserpage.dart';
+import 'package:firebase_login_project/screens/wordspage.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/homePage': (context) => HomePage(),
           '/loginPage': (context) => const LoginPage(),
+          '/newUserPage': (context) => NewUserPage(),
+          '/wordsPage': (context) => WordsPage(),
         });
   }
 }
