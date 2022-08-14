@@ -138,11 +138,4 @@ class _WordsPageState extends State<WordsPage> {
                     );
             }));
   }
-
-  List getVariables() {
-    Stream<QuerySnapshot<Object?>> snapshot = _wordService.getWords();
-    print(snapshot.first);
-
-    return [2, 4];
-  }
 }

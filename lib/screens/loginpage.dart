@@ -12,7 +12,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   AuthService _authService = AuthService();
-
   var controllerEmail = TextEditingController();
   var controllerPassword = TextEditingController();
   bool wrongVisibility = false;
@@ -20,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.width;
     final email = TextFormField(
       controller: controllerEmail,
       keyboardType: TextInputType.emailAddress,
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: secondColor, padding: const EdgeInsets.all(15)),
         onPressed: () {
@@ -89,40 +89,46 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: ListView(
-          shrinkWrap: false,
-          padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 100),
-          children: <Widget>[
-            Expanded(child: SizedBox(height: 70)),
-            Image.asset('assets/loginpageimage.png'),
-            const SizedBox(height: 20.0),
-            email,
-            const SizedBox(height: 8.0),
-            password,
-            const SizedBox(height: 5.0),
-            Visibility(
-                visible: wrongVisibility,
-                child: const Text(
-                  "Wrong email or password",
-                  style: TextStyle(color: Colors.red),
-                )),
-            loginButton,
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.mail_outline),
-                    gmailSign,
-                    const Icon(Icons.lock_reset),
-                    forgotLabel,
-                  ],
-                ),
-                newUserLabel,
-              ],
-            ),
-          ],
-        ),
+        child: SingleChildScrollView(
+            reverse: true,
+            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            child: Container(
+              height: size * 1.28,
+              child: Column(
+                children: <Widget>[
+                  Expanded(child: SizedBox(height: size / 2)),
+                  Image.asset('assets/loginpageimage.png'),
+                  const SizedBox(height: 20.0),
+                  email,
+                  const SizedBox(height: 8.0),
+                  password,
+                  const SizedBox(height: 5.0),
+                  Flexible(
+                    child: Visibility(
+                        visible: wrongVisibility,
+                        child: const Text(
+                          "Wrong email or password",
+                          style: TextStyle(color: Colors.red),
+                        )),
+                  ),
+                  loginButton,
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.mail_outline),
+                          gmailSign,
+                          const Icon(Icons.lock_reset),
+                          forgotLabel,
+                        ],
+                      ),
+                      newUserLabel,
+                    ],
+                  ),
+                ],
+              ),
+            )),
       ),
     );
   }

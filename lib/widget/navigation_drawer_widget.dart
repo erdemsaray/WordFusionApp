@@ -1,3 +1,4 @@
+import 'package:firebase_login_project/screens/loginpage.dart';
 import 'package:firebase_login_project/service/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,26 +14,28 @@ class NavigationDrawerWidget extends StatelessWidget {
     return Drawer(
       child: Material(
           color: Color.fromARGB(255, 255, 148, 0),
-          child: ListView(
+          child: Column(
             children: <Widget>[
               SizedBox(height: size * 1.5),
               buildMenuItem(text: "Kelimeler", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
               buildMenuItem(
                   text: "Hızlı Tekrar", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
-                  text: "Günlük",
+                  text: "Kelime Ekle",
                   icon: Icons.border_color_sharp,
                   size: size,
                   onClicked: () => selectedItem(context, 3)),
               buildMenuItem(
-                  text: "Ajanda",
+                  text: "Sözlük",
                   icon: Icons.auto_awesome_mosaic,
                   size: size,
                   onClicked: () => selectedItem(context, 4)),
-              SizedBox(
-                height: size * 7,
+              Expanded(
+                child: SizedBox(
+                  height: size * 10,
+                ),
               ),
-              Divider(
+              const Divider(
                 color: Colors.white70,
               ),
               buildMenuItem(
@@ -43,16 +46,35 @@ class NavigationDrawerWidget extends StatelessWidget {
   }
 
   void selectedItem(BuildContext context, int i) {
-    Navigator.popUntil(context, ModalRoute.withName("/homePage"));
     switch (i) {
       case 0:
+        Navigator.of(context).pop();
         AuthService _auth = AuthService();
         _auth.signOut();
-        Navigator.pushReplacementNamed(context, '/loginPage');
+        try {
+          Navigator.pushReplacementNamed(context, '/loginPage');
+        } catch (e) {
+          Navigator.pushNamed(context, '/loginPage');
+        }
         break;
       case 1:
+        Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.pushNamed(context, '/wordsPage');
-
+        break;
+      case 2:
+        Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pushNamed(context, '/speedTestPage');
+        break;
+      case 3:
+        Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        break;
+      case 4:
+        Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pushNamed(context, '/translatePage');
         break;
       default:
     }

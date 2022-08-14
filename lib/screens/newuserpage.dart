@@ -84,6 +84,7 @@ class _NewUserPageState extends State<NewUserPage> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           child: SingleChildScrollView(
