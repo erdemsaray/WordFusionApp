@@ -94,10 +94,9 @@ class _WordsPageState extends State<WordsPage> {
                             },
                             child: Container(
                               constraints: BoxConstraints(minHeight: size * 4),
-                              decoration: BoxDecoration(
-                                  color: ColorItems.mainColor,
-                                  border: Border.all(width: 5, color: Colors.grey),
-                                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+                              decoration: const BoxDecoration(
+                                color: ColorItems.mainColor,
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.only(right: size, left: size),
                                 child: Container(

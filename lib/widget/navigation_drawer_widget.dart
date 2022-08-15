@@ -1,5 +1,6 @@
 import 'package:firebase_login_project/screens/loginpage.dart';
 import 'package:firebase_login_project/service/auth.dart';
+import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class NavigationDrawerWidget extends StatelessWidget {
 
     return Drawer(
       child: Material(
-          color: Color.fromARGB(255, 255, 148, 0),
+          color: ColorItems.mainColor,
           child: Column(
             children: <Widget>[
               SizedBox(height: size * 1.5),
