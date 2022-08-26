@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
@@ -15,6 +16,14 @@ class SpeedTestPage extends StatefulWidget {
   State<SpeedTestPage> createState() => _SpeedTestPageState();
 }
 
+Color card0Color = Colors.white;
+Color card1Color = Colors.white;
+Color card2Color = Colors.white;
+Color card3Color = Colors.white;
+
+Timer? timer;
+int kalanSure = 60;
+int puan = 0;
 int index = 0;
 List<Alignment> alignment = [Alignment.bottomCenter, Alignment.bottomLeft, Alignment.bottomRight];
 final WordService _wordService = WordService();
@@ -64,17 +73,27 @@ void soruHazirla() {
 }
 
 class _SpeedTestPageState extends State<SpeedTestPage> {
+  int gecikmeSuresi = 300;
+
+  @override
+  void initState() {
+    startTimer();
+    kalanSure = 60;
+    puan = 0;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer!.cancel();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.dehaze),
-        onPressed: () async {
-          await Future.delayed(const Duration(milliseconds: 700));
-          yeniSoruyaGec();
-        },
-      ),
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
         backgroundColor: ColorItems.mainColor,
@@ -98,11 +117,6 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
               }
             }
 
-            Color card0Color = Colors.white;
-            Color card1Color = Colors.white;
-            Color card2Color = Colors.white;
-            Color card3Color = Colors.white;
-
             return !snapshot.hasData
                 ? const Center(child: CircularProgressIndicator())
                 : Container(
@@ -123,7 +137,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                         ),
                         SafeArea(
                           child: Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
                             child: Column(
                               children: [
                                 Padding(
@@ -133,27 +147,23 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                     top: 40,
                                   ),
                                   child: Card(
-                                    child: InkWell(
-                                      onTap: () {},
-                                      splashColor: Colors.blue,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.accessibility, size: 70.0),
-                                                const SizedBox(
-                                                  width: 70,
-                                                ),
-                                                Text(
-                                                  questionWord,
-                                                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.accessibility, size: 70.0),
+                                              const SizedBox(
+                                                width: 70,
+                                              ),
+                                              Text(
+                                                questionWord,
+                                                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -170,13 +180,16 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             onTap: () async {
                                               card0answer = dogruMu(cevaplar[0]);
                                               if (card0answer == true) {
+                                                puan++;
                                                 setState(() {});
-                                                await Future.delayed(const Duration(milliseconds: 700));
-                                                yeniSoruyaGec();
                                               } else {
                                                 card0Color = Colors.red;
+                                                puan--;
                                                 setState(() {});
                                               }
+
+                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
+                                              yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
                                             child: Center(
@@ -198,13 +211,15 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             onTap: () async {
                                               card1answer = dogruMu(cevaplar[1]);
                                               if (card1answer == true) {
+                                                puan++;
                                                 setState(() {});
-                                                await Future.delayed(const Duration(milliseconds: 700));
-                                                yeniSoruyaGec();
                                               } else {
                                                 card1Color = Colors.red;
+                                                puan--;
                                                 setState(() {});
                                               }
+                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
+                                              yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
                                             child: Center(
@@ -226,13 +241,15 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             onTap: () async {
                                               card2answer = dogruMu(cevaplar[2]);
                                               if (card2answer == true) {
+                                                puan++;
                                                 setState(() {});
-                                                await Future.delayed(const Duration(milliseconds: 700));
-                                                yeniSoruyaGec();
                                               } else {
                                                 card2Color = Colors.red;
+                                                puan--;
                                                 setState(() {});
                                               }
+                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
+                                              yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
                                             child: Center(
@@ -254,13 +271,16 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             onTap: () async {
                                               card3answer = dogruMu(cevaplar[3]);
                                               if (card3answer == true) {
+                                                puan++;
                                                 setState(() {});
-                                                await Future.delayed(const Duration(milliseconds: 700));
-                                                yeniSoruyaGec();
                                               } else {
                                                 card3Color = Colors.red;
+                                                puan--;
                                                 setState(() {});
                                               }
+
+                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
+                                              yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
                                             child: Center(
@@ -276,6 +296,23 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             ),
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 50, right: 20, left: 20),
+                                  child: DefaultTextStyle(
+                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    child: Row(
+                                      children: [
+                                        Text("Puan: ${puan}"),
+                                        const Expanded(
+                                          child: SizedBox(
+                                            width: 120,
+                                          ),
+                                        ),
+                                        Text("Kalan Süre: ${kalanSure}"),
                                       ],
                                     ),
                                   ),
@@ -300,11 +337,36 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   }
 
   void yeniSoruyaGec() {
+    card0Color = Colors.white;
+    card1Color = Colors.white;
+    card2Color = Colors.white;
+    card3Color = Colors.white;
     card3answer = false;
     card2answer = false;
     card1answer = false;
     card0answer = false;
     soruHazirla();
     setState(() {});
+  }
+
+  bool yanlisVarMi() {
+    if (card0Color == Colors.red || card1Color == Colors.red || card2Color == Colors.red || card3Color == Colors.red) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (kalanSure < 1) {
+          timer.cancel();
+          Navigator.pop(context);
+        } else {
+          kalanSure--;
+        }
+      });
+    });
   }
 }

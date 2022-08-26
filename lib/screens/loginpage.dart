@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
   var controllerEmail = TextEditingController();
   var controllerPassword = TextEditingController();
   bool wrongVisibility = false;
@@ -82,7 +82,15 @@ class _LoginPageState extends State<LoginPage> {
     ]);
 
     final gmailSign = TextButton(
-      onPressed: () {},
+      onPressed: () async {
+        await _authService.signWithGmailAccount().then(
+          (value) {
+            if (value != null) {
+              Navigator.pushReplacementNamed(context, '/homePage');
+            }
+          },
+        );
+      },
       child: const Text("Sign with Gmail"),
     );
 

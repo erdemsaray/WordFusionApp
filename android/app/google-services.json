@@ -9,10 +9,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:804868111526:android:c9db7782c47ed6d88f8867",
         "android_client_info": {
-          "package_name": "com.example.firebase_login_project"
+          "package_name": "com.funnywordslearn.app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "804868111526-bmgdkm9iq0j543bs6gnuj2nl8nbjtk51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_login_project",
+            "certificate_hash": "845226bb65cb4bd83d42e9b205b139b96fe88647"
+          }
+        },
         {
           "client_id": "804868111526-5p6p0f9s4mc9qkrapahuequuvthp4a4b.apps.googleusercontent.com",
           "client_type": 3
