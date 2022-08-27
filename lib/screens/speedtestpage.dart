@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_login_project/screens/testresultpage.dart';
 import 'package:firebase_login_project/service/word_service.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ final WordService _wordService = WordService();
 final Map<String, String> kelimeler = HashMap();
 String questionWord = "asd";
 List<String> cevaplar = [];
+List<String> wrongWords = [];
 bool card3answer = false;
 bool card2answer = false;
 bool card1answer = false;
@@ -153,7 +155,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                         children: [
                                           Row(
                                             children: [
-                                              const Icon(Icons.accessibility, size: 70.0),
+                                              const Icon(Icons.blur_on_rounded, size: 70.0),
                                               const SizedBox(
                                                 width: 70,
                                               ),
@@ -170,7 +172,10 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 10, left: 10, bottom: 40),
+                                    padding: const EdgeInsets.only(
+                                      right: 10,
+                                      left: 10,
+                                    ),
                                     child: GridView.count(
                                       crossAxisCount: 2,
                                       children: [
@@ -184,6 +189,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card0Color = Colors.red;
+                                                wrongWords.add("$questionWord => ${cevaplar[0]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -192,16 +198,24 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                               yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    cevaplar[0],
-                                                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Expanded(
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 35),
+                                                      child: Text(
+                                                        cevaplar[0],
+                                                        style:
+                                                            const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -215,6 +229,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card1Color = Colors.red;
+                                                wrongWords.add("$questionWord => ${cevaplar[1]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -224,11 +239,16 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             splashColor: Colors.blue,
                                             child: Center(
                                               child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Text(
-                                                    cevaplar[1],
-                                                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                                                    child: Text(
+                                                      cevaplar[1],
+                                                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -245,6 +265,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card2Color = Colors.red;
+                                                wrongWords.add("$questionWord => ${cevaplar[2]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -254,11 +275,16 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             splashColor: Colors.blue,
                                             child: Center(
                                               child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Text(
-                                                    cevaplar[2],
-                                                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 35),
+                                                    child: Text(
+                                                      cevaplar[2],
+                                                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -275,6 +301,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card3Color = Colors.red;
+                                                wrongWords.add("$questionWord => ${cevaplar[3]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -283,16 +310,19 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                               yeniSoruyaGec();
                                             },
                                             splashColor: Colors.blue,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                                                  child: Text(
                                                     cevaplar[3],
                                                     style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -300,23 +330,19 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 50, right: 20, left: 20),
-                                  child: DefaultTextStyle(
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                    child: Row(
-                                      children: [
-                                        Text("Puan: ${puan}"),
-                                        const Expanded(
-                                          child: SizedBox(
-                                            width: 120,
-                                          ),
-                                        ),
-                                        Text("Kalan Süre: ${kalanSure}"),
-                                      ],
-                                    ),
+                                DefaultTextStyle(
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text("Puan: ${puan}"),
+                                      Text("Kalan Süre: ${kalanSure}"),
+                                    ],
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 90,
+                                )
                               ],
                             ),
                           ),
@@ -362,7 +388,14 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
       setState(() {
         if (kalanSure < 1) {
           timer.cancel();
+
           Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TestResultPage(kelimeler: wrongWords, point: puan),
+            ),
+          );
         } else {
           kalanSure--;
         }

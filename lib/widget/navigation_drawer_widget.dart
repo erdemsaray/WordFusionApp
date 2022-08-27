@@ -1,12 +1,10 @@
-import 'package:firebase_login_project/screens/loginpage.dart';
 import 'package:firebase_login_project/service/auth.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
-  AuthService _auth = AuthService();
+  final padding = const EdgeInsets.symmetric(horizontal: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +16,14 @@ class NavigationDrawerWidget extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(height: size * 1.5),
-              buildMenuItem(text: "Kelimeler", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
-              buildMenuItem(
-                  text: "Hızlı Tekrar", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
                   text: "Kelime Ekle",
                   icon: Icons.border_color_sharp,
                   size: size,
                   onClicked: () => selectedItem(context, 3)),
+              buildMenuItem(text: "Kelimeler", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
+              buildMenuItem(
+                  text: "Hızlı Tekrar", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
                   text: "Sözlük",
                   icon: Icons.auto_awesome_mosaic,

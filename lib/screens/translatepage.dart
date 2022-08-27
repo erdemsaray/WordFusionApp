@@ -10,13 +10,9 @@ class TranslatePage extends StatefulWidget {
   State<TranslatePage> createState() => _TranslatePageState();
 }
 
-String? websiteURL;
-Color specialRedColor = const Color.fromARGB(255, 126, 23, 18);
-String homePageUrl = "https://translate.google.com/?hl=tr";
-
 class _TranslatePageState extends State<TranslatePage> {
-  bool isLoading = true;
-  late WebViewController controller; //!!!! hataya yol açmazsa kaldırılacak.
+  TextEditingController enterTextController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -24,60 +20,73 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.width * 0.08;
+    double widthSize = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.reload();
-        },
-        child: const Icon(Icons.rss_feed),
-      ),
-      drawer: NavigationDrawerWidget(),
-      appBar: AppBar(
-        backgroundColor: ColorItems.mainColor,
-        title: const Text('Translate Page'),
-        centerTitle: true,
-      ),
-      body: Stack(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: size),
-            child: WebView(
-              backgroundColor: Colors.white,
-              initialUrl: homePageUrl,
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (controller) {
-                this.controller = controller;
-              },
-              onPageStarted: (finish) {
-                setState(() {
-                  isLoading = false;
-                });
-              },
-              onPageFinished: (url) {},
-            ),
-          ),
-          isLoading
-              ? Center(
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 100, left: 100),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/newword.png"),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: LinearProgressIndicator(),
-                        ),
-                      ],
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.rss_feed),
+        ),
+        drawer: NavigationDrawerWidget(),
+        appBar: AppBar(
+          backgroundColor: ColorItems.mainColor,
+          title: const Text('Translate Page'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: widthSize * 0.9,
+                height: 200,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20.0), color: ColorItems.translateBackground),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Detect Language",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : Stack(),
-        ],
-      ),
-    );
+                    SizedBox(
+                      child: Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: enterTextController,
+                            keyboardType: TextInputType.text,
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              hintText: 'Enter text here',
+                              contentPadding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                            ),
+                            validator: (value) {
+                              if (value != null) {
+                                if (value.isEmpty) {
+                                  return 'Boş bırakılamaz';
+                                } else {
+                                  return null;
+                                }
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
