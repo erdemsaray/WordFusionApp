@@ -79,17 +79,19 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
 
   @override
   void initState() {
-    startTimer();
     kalanSure = 60;
+    wrongWords.clear();
+    startTimer();
+
     puan = 0;
     super.initState();
   }
 
   @override
   void dispose() {
-    timer!.cancel();
-
     super.dispose();
+
+    deactivate();
   }
 
   @override
@@ -189,7 +191,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card0Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${cevaplar[0]}");
+                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -229,7 +231,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card1Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${cevaplar[1]}");
+                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -265,7 +267,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card2Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${cevaplar[2]}");
+                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
                                                 puan--;
                                                 setState(() {});
                                               }
@@ -301,7 +303,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 setState(() {});
                                               } else {
                                                 card3Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${cevaplar[3]}");
+                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
                                                 puan--;
                                                 setState(() {});
                                               }

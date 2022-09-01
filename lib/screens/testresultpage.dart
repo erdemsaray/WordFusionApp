@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -34,11 +33,11 @@ class _TestResultPageState extends State<TestResultPage> {
             ),
             Text(
               "Your Point: ${widget.point}",
-              style: TextStyle(fontSize: 40, color: Colors.white),
+              style: const TextStyle(fontSize: 40, color: Colors.white),
             ),
-            const Text(
-              "You must repeat these words",
-              style: TextStyle(fontSize: 24, color: Colors.white60),
+            Text(
+              widget.kelimeler.isNotEmpty ? "You must repeat these words" : "All words answered correctly.",
+              style: const TextStyle(fontSize: 24, color: Colors.white60),
             ),
             const SizedBox(height: 24),
             Expanded(

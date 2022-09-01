@@ -4,7 +4,6 @@ import 'package:firebase_login_project/screens/homepage.dart';
 import 'package:firebase_login_project/screens/loginpage.dart';
 import 'package:firebase_login_project/screens/newuserpage.dart';
 import 'package:firebase_login_project/screens/speedtestpage.dart';
-import 'package:firebase_login_project/screens/testresultpage.dart';
 import 'package:firebase_login_project/screens/translatepage.dart';
 import 'package:firebase_login_project/screens/wordspage.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
 
 // Assign widget based on availability of currentUser
     if (firebaseUser != null) {
-      firstWidget = HomePage();
+      firstWidget = const HomePage();
     } else {
       firstWidget = const LoginPage();
     }
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: firstWidget,
         routes: {
-          '/homePage': (context) => HomePage(),
+          '/homePage': (context) => const HomePage(),
           '/loginPage': (context) => const LoginPage(),
           '/newUserPage': (context) => NewUserPage(),
           '/wordsPage': (context) => WordsPage(),
