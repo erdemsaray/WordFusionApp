@@ -1,6 +1,7 @@
 import 'package:firebase_login_project/service/auth.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
+//comment satırı
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
