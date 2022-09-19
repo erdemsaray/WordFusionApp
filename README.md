@@ -5,3 +5,4 @@
 - Kelime Testi
 - Kelime Listesi Görme
 - Kelime Silme
+- Sözlükten direkt kelime ekleme eklenecek
