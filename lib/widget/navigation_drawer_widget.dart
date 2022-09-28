@@ -17,15 +17,15 @@ class NavigationDrawerWidget extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: size * 1.5),
               buildMenuItem(
-                  text: "Kelime Ekle",
+                  text: "Add New Word",
                   icon: Icons.border_color_sharp,
                   size: size,
                   onClicked: () => selectedItem(context, 3)),
-              buildMenuItem(text: "Kelimeler", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
+              buildMenuItem(text: "Words", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
               buildMenuItem(
-                  text: "Hızlı Tekrar", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
+                  text: "Speed Test", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
-                  text: "Sözlük",
+                  text: "Dictionary",
                   icon: Icons.auto_awesome_mosaic,
                   size: size,
                   onClicked: () => selectedItem(context, 4)),

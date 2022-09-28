@@ -41,11 +41,12 @@ void soruHazirla() {
   cevaplar.clear();
 
   if (kelimeler.length < 4) {
-    questionWord = "yeterli kelime yok";
-    cevaplar.add("yeterli kelime yok");
-    cevaplar.add("yeterli kelime yok");
-    cevaplar.add("yeterli kelime yok");
-    cevaplar.add("yeterli kelime yok");
+    questionWord = "4 words required!";
+    cevaplar.add("not enough words");
+    cevaplar.add("not enough words");
+    cevaplar.add("not enough words");
+    cevaplar.add("not enough words");
+    timer!.cancel();
   } else {
     //bu kısımda hata veriyor
     int x = Random().nextInt(kelimeler.length - 1);
@@ -337,8 +338,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      Text("Puan: ${puan}"),
-                                      Text("Kalan Süre: ${kalanSure}"),
+                                      Text("Score: ${puan}"),
+                                      Text("Time: ${kalanSure}"),
                                     ],
                                   ),
                                 ),
@@ -387,21 +388,23 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (kalanSure < 1) {
-          timer.cancel();
+      if (mounted) {
+        setState(() {
+          if (kalanSure < 1) {
+            timer.cancel();
 
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TestResultPage(kelimeler: wrongWords, point: puan),
-            ),
-          );
-        } else {
-          kalanSure--;
-        }
-      });
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TestResultPage(kelimeler: wrongWords, point: puan),
+              ),
+            );
+          } else {
+            kalanSure--;
+          }
+        });
+      }
     });
   }
 }
