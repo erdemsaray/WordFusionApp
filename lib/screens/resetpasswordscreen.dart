@@ -2,16 +2,14 @@ import 'package:firebase_login_project/service/auth.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 
-class NewUserPage extends StatefulWidget {
-  NewUserPage({Key? key}) : super(key: key);
+class ResetPasswordPage extends StatefulWidget {
+  ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<NewUserPage> createState() => _NewUserPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _NewUserPageState extends State<NewUserPage> {
-  static var controllerPasswordA = TextEditingController();
-  static var controllerPasswordB = TextEditingController();
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   static var controllerEmail = TextEditingController();
   final AuthService _authCreateService = AuthService();
   String inputWrongResult = '';
@@ -25,50 +23,21 @@ class _NewUserPageState extends State<NewUserPage> {
         children: [
           Expanded(
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: secondColor, padding: const EdgeInsets.all(15)),
+              style: ElevatedButton.styleFrom(backgroundColor: secondColor, padding: const EdgeInsets.all(15)),
               onPressed: () {
-                if (passwordControl(controllerPasswordA.text, controllerPasswordB.text)) {
-                  if (emailFormatControl(controllerEmail.text)) {
-                    _authCreateService.createPerson(controllerEmail.text, controllerPasswordA.text);
-                    Navigator.pop(context);
-                  } else {
-                    inputWrongResult = 'A valid email is required';
-                  }
-                } else {
-                  inputWrongResult = 'Passwords must be at least 6 characters and equals';
-                }
-
-                setState(() {});
+                setState(() {
+                  _authCreateService.passwordReset(controllerEmail.text);
+                  print(controllerEmail.text);
+                  Navigator.pop(context);
+                });
               },
               child: const Text(
-                'Create Account',
+                'Send password reset e-mail',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
         ],
-      ),
-    );
-
-    final password = TextFormField(
-      controller: controllerPasswordA,
-      autofocus: false,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Password',
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final passwordAgain = TextFormField(
-      controller: controllerPasswordB,
-      autofocus: false,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Retry Password',
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -98,11 +67,6 @@ class _NewUserPageState extends State<NewUserPage> {
                     height: 7,
                   ),
                   email,
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10, top: 10),
-                    child: password,
-                  ),
-                  passwordAgain,
                   Text(
                     inputWrongResult,
                     style: TextStyle(color: Colors.red),
@@ -115,13 +79,6 @@ class _NewUserPageState extends State<NewUserPage> {
         ),
       ),
     );
-  }
-
-  bool passwordControl(String passwordA, String passwordB) {
-    if (passwordA == passwordB) {
-      if (passwordA.length >= 6) return true;
-    }
-    return false;
   }
 
   bool emailFormatControl(String email) {

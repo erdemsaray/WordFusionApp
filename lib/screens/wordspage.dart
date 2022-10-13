@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_login_project/service/word_service.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
@@ -13,7 +14,9 @@ class WordsPage extends StatefulWidget {
 }
 
 bool meanVisible = false;
+bool rightOrLeft = true;
 var valueVisibleList = List<bool>.filled(0, true, growable: true);
+var valueVisibleList2 = List<bool>.filled(1, true, growable: true);
 
 class _WordsPageState extends State<WordsPage> {
   final WordService _wordService = WordService();
@@ -21,121 +24,178 @@ class _WordsPageState extends State<WordsPage> {
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width * 0.05;
+    String boxFirst = "word";
+    String boxSecond = "mean";
 
     return Scaffold(
+        extendBodyBehindAppBar: true,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green.shade600,
           onPressed: (() {
-            valueVisibleList.fillRange(0, valueVisibleList.length, !valueVisibleList[0]);
+            visibilityChange(rightOrLeft);
             setState(() {});
           }),
-          backgroundColor: Colors.grey,
           child: const Icon(Icons.visibility),
         ),
         drawer: NavigationDrawerWidget(),
         appBar: AppBar(
-          backgroundColor: ColorItems.mainColor,
-          title: const Text('Word List Page'),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                  onPressed: () {
+                    visibleEvery();
+                    rightOrLeft = !rightOrLeft;
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.autorenew_rounded)),
+            )
+          ],
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: AnimatedTextKit(
+            animatedTexts: [WavyAnimatedText("Words")],
+          ),
           centerTitle: true,
         ),
-        body: StreamBuilder<QuerySnapshot>(
-            stream: _wordService.getWords(),
-            builder: (context, snapshot) {
-              return !snapshot.hasData
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        valueVisibleList.add(false);
-                        DocumentSnapshot mypost = snapshot.data!.docs[index];
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Colors.green.shade400,
+            Colors.blue.shade900,
+          ])),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: _wordService.getWords(),
+                  builder: (context, snapshot) {
+                    return !snapshot.hasData
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              valueVisibleList2.add(true);
+                              valueVisibleList.add(false);
+                              DocumentSnapshot mypost = snapshot.data!.docs[index];
 
-                        Future<void> _showDeleteDialog(BuildContext) {
-                          return showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Center(child: Text("Kelime silinsin mi?")),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                  ),
-                                  content: Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                            onTap: () => _wordService
-                                                .removeWord(mypost.id)
-                                                .then((value) => Navigator.pop(context)),
-                                            child: const Text("Evet")),
-                                        const SizedBox(
-                                          width: 40,
+                              Future<void> _showDeleteDialog(BuildContext) {
+                                return showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Center(child: Text("Kelime silinsin mi?")),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
                                         ),
-                                        InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              });
-                        }
+                                        content: Container(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                  onTap: () => _wordService
+                                                      .removeWord(mypost.id)
+                                                      .then((value) => Navigator.pop(context)),
+                                                  child: const Text("Evet")),
+                                              const SizedBox(
+                                                width: 40,
+                                              ),
+                                              InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              }
 
-                        return Padding(
-                          padding: EdgeInsets.all(size * 0.2),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                valueVisibleList[index] = !valueVisibleList[index];
-                              });
-                            },
-                            onDoubleTap: () {
-                              setState(() {
-                                _showDeleteDialog(BuildContext);
-                              });
-                            },
-                            child: Container(
-                              constraints: BoxConstraints(minHeight: size * 4),
-                              decoration: const BoxDecoration(
-                                color: ColorItems.mainColor,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(right: size, left: size),
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "${mypost['word']}",
-                                          style: const TextStyle(
-                                              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                              return Padding(
+                                padding: EdgeInsets.all(size * 0.2),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      visibleIndex(index, rightOrLeft);
+                                    });
+                                  },
+                                  onDoubleTap: () {
+                                    setState(() {
+                                      _showDeleteDialog(BuildContext);
+                                    });
+                                  },
+                                  child: Container(
+                                    constraints: BoxConstraints(minHeight: size * 4),
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(25), right: Radius.circular(25)),
+                                      color: Colors.indigo,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: size, left: size),
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Visibility(
+                                                visible: valueVisibleList2[index],
+                                                child: Text(
+                                                  "${mypost[boxFirst]}",
+                                                  style: const TextStyle(
+                                                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                            const Text(
+                                              ": ",
+                                              style: TextStyle(
+                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                                child: Visibility(
+                                              visible: valueVisibleList[index],
+                                              child: Text(
+                                                "${mypost[boxSecond]}",
+                                                style: const TextStyle(
+                                                    color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                              ),
+                                            ))
+                                          ],
                                         ),
                                       ),
-                                      const Text(
-                                        ": ",
-                                        style:
-                                            TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                          child: Visibility(
-                                        visible: valueVisibleList[index],
-                                        child: Text(
-                                          "${mypost['mean']}",
-                                          style: const TextStyle(
-                                              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                        ),
-                                      ))
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-            }));
+                              );
+                            },
+                          );
+                  }),
+            ),
+          ),
+        ));
+  }
+
+  void visibilityChange(bool value) {
+    if (value) {
+      valueVisibleList.fillRange(0, valueVisibleList.length, !valueVisibleList[0]);
+    } else {
+      valueVisibleList2.fillRange(0, valueVisibleList2.length, !valueVisibleList2[0]);
+    }
+  }
+
+  void visibleEvery() {
+    valueVisibleList.fillRange(0, valueVisibleList.length, true);
+    valueVisibleList2.fillRange(0, valueVisibleList2.length, true);
+  }
+
+  void visibleIndex(int index, bool value) {
+    if (value) {
+      valueVisibleList[index] = !valueVisibleList[index];
+    } else {
+      valueVisibleList2[index] = !valueVisibleList2[index];
+    }
   }
 
   List getVariables() {

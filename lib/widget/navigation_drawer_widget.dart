@@ -25,7 +25,7 @@ class NavigationDrawerWidget extends StatelessWidget {
               buildMenuItem(
                   text: "Speed Test", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
-                  text: "Dictionary",
+                  text: "Translate",
                   icon: Icons.auto_awesome_mosaic,
                   size: size,
                   onClicked: () => selectedItem(context, 4)),

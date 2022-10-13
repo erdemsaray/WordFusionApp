@@ -2,25 +2,25 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_login_project/screens/testresultpage.dart';
 import 'package:firebase_login_project/service/word_service.dart';
-import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/navigation_drawer_widget.dart';
 
 class SpeedTestPage extends StatefulWidget {
-  SpeedTestPage({Key? key}) : super(key: key);
+  const SpeedTestPage({Key? key}) : super(key: key);
 
   @override
   State<SpeedTestPage> createState() => _SpeedTestPageState();
 }
 
-Color card0Color = Colors.white;
-Color card1Color = Colors.white;
-Color card2Color = Colors.white;
-Color card3Color = Colors.white;
+Color card0Color = Colors.indigo;
+Color card1Color = Colors.indigo;
+Color card2Color = Colors.indigo;
+Color card3Color = Colors.indigo;
 
 Timer? timer;
 int kalanSure = 60;
@@ -76,7 +76,7 @@ void soruHazirla() {
 }
 
 class _SpeedTestPageState extends State<SpeedTestPage> {
-  int gecikmeSuresi = 300;
+  int gecikmeSuresi = 200;
 
   @override
   void initState() {
@@ -99,10 +99,15 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
-        backgroundColor: ColorItems.mainColor,
-        title: const Text('Speed Test Page'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: AnimatedTextKit(
+          animatedTexts: [WavyAnimatedText("Speed Test")],
+          repeatForever: false,
+        ),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -132,18 +137,22 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                     ])),
                     child: Stack(
                       children: [
-                        Container(
-                          height: size.height * 3,
-                          decoration: const BoxDecoration(
-                              //image: DecorationImage(alignment: Alignment.topCenter, image: AssetImage('assets/topheader.png'
-                              //)
-                              //)
-                              ),
+                        Center(
+                          child: Container(
+                            height: size.height * 3,
+                            decoration: const BoxDecoration(
+                                //image: DecorationImage(alignment: Alignment.topCenter, image: AssetImage('assets/topheader.png'
+                                //)
+                                //)
+                                ),
+                          ),
                         ),
                         SafeArea(
                           child: Padding(
                             padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -152,19 +161,28 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                     top: 40,
                                   ),
                                   child: Card(
+                                    color: Colors.indigo,
                                     child: Center(
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              const Icon(Icons.blur_on_rounded, size: 70.0),
                                               const SizedBox(
-                                                width: 70,
+                                                  height: 70,
+                                                  child: Icon(
+                                                    Icons.star,
+                                                    size: 30,
+                                                    color: Colors.white,
+                                                  )),
+                                              const SizedBox(
+                                                width: 6,
                                               ),
                                               Text(
                                                 questionWord,
-                                                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                style: const TextStyle(
+                                                    fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
                                               ),
                                             ],
                                           ),
@@ -212,8 +230,10 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                       padding: const EdgeInsets.symmetric(horizontal: 35),
                                                       child: Text(
                                                         cevaplar[0],
-                                                        style:
-                                                            const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                        style: const TextStyle(
+                                                            fontSize: 17,
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold),
                                                       ),
                                                     ),
                                                   ),
@@ -250,7 +270,10 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                     padding: const EdgeInsets.symmetric(horizontal: 35.0),
                                                     child: Text(
                                                       cevaplar[1],
-                                                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                      style: const TextStyle(
+                                                          fontSize: 17,
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 ],
@@ -286,7 +309,10 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                     padding: const EdgeInsets.symmetric(horizontal: 35),
                                                     child: Text(
                                                       cevaplar[2],
-                                                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                      style: const TextStyle(
+                                                          fontSize: 17,
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
                                                 ],
@@ -322,7 +348,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                   padding: const EdgeInsets.symmetric(horizontal: 35.0),
                                                   child: Text(
                                                     cevaplar[3],
-                                                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                                    style: const TextStyle(
+                                                        fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
                                                   ),
                                                 ),
                                               ],
@@ -344,7 +371,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 90,
+                                  height: 110,
                                 )
                               ],
                             ),
@@ -366,10 +393,10 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   }
 
   void yeniSoruyaGec() {
-    card0Color = Colors.white;
-    card1Color = Colors.white;
-    card2Color = Colors.white;
-    card3Color = Colors.white;
+    card0Color = Colors.indigo;
+    card1Color = Colors.indigo;
+    card2Color = Colors.indigo;
+    card3Color = Colors.indigo;
     card3answer = false;
     card2answer = false;
     card1answer = false;

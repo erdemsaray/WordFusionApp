@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: secondColor, padding: const EdgeInsets.all(15)),
+        style: ElevatedButton.styleFrom(backgroundColor: secondColor, padding: const EdgeInsets.all(15)),
         onPressed: () {
           _authService.signIn(controllerEmail.text, controllerPassword.text).then((value) {
             if (value != null) {
@@ -70,7 +70,9 @@ class _LoginPageState extends State<LoginPage> {
         'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, '/resetPasswordPage');
+      },
     );
 
     final newUserLabel = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -101,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
             reverse: true,
             padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            child: Container(
+            child: SizedBox(
               height: size * 1.28,
               child: Column(
                 children: <Widget>[

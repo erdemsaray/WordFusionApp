@@ -21,6 +21,10 @@ class AuthService {
     return await _auth.signOut();
   }
 
+  void passwordReset(String email){
+    _auth.sendPasswordResetEmail(email: email);
+  }
+
   Future<UserCredential?> signWithGmailAccount() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();

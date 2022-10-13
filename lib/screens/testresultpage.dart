@@ -1,5 +1,7 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class TestResultPage extends StatefulWidget {
   final List<String> kelimeler;
@@ -19,7 +21,9 @@ class _TestResultPageState extends State<TestResultPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: ColorItems.mainColor,
-        title: const Text("Speed Test Result"),
+        title: AnimatedTextKit(
+          animatedTexts: [WavyAnimatedText("Speed Test Result")],
+        ),
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
@@ -28,8 +32,12 @@ class _TestResultPageState extends State<TestResultPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 150,
+            SizedBox(
+              height: 170,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Lottie.asset('assets/lottie/congratulations.json'),
+              ),
             ),
             Text(
               "Your Point: ${widget.point}",
