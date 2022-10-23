@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_login_project/screens/testresultpage.dart';
 import 'package:firebase_login_project/service/word_service.dart';
@@ -76,7 +74,7 @@ void soruHazirla() {
 }
 
 class _SpeedTestPageState extends State<SpeedTestPage> {
-  int gecikmeSuresi = 200;
+  int gecikmeSuresi = 100;
 
   @override
   void initState() {
@@ -104,10 +102,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: AnimatedTextKit(
-          animatedTexts: [WavyAnimatedText("Speed Test")],
-          repeatForever: false,
-        ),
+        title: const Text("Speed Test"),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(

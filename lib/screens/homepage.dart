@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   final formKey = GlobalKey<FormState>();
 
+
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                         visible: lastWordStatus,
                         child: Text(
                           statusText,
-                          style: const TextStyle(color: Colors.green),
+                          style: const TextStyle(color: Colors.yellow),
                         )),
                     const SizedBox(
                       height: 5,
@@ -133,6 +134,9 @@ class _HomePageState extends State<HomePage> {
                                           controllerWord.clear();
                                           controllerMean.clear();
                                           lastWordStatus = true;
+
+                                          //focusu öncekine geri alir.
+                                          FocusScope.of(context).previousFocus();
                                         });
                                       }
                                     },

@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_login_project/screens/speedtestpage.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 import '../utils/project_variables.dart';
@@ -15,6 +16,7 @@ class TranslatePage extends StatefulWidget {
 String enterText = "Enter Text";
 String translated = "Translation";
 String translatedValue = "Translation";
+bool emptyControl = false;
 
 final languageItems = ['English (EN)', 'Turkish (TR)'];
 
@@ -31,10 +33,13 @@ class _TranslatePageState extends State<TranslatePage> {
   String? value2 = 'Turkish (TR)';
   String fromInput = 'en';
   String toInput = 'tr';
+  String attentionText = "Word can't be empty";
+  Color attentionTextColor = Colors.red;
 
   @override
   void initState() {
     translated = "Translation";
+    emptyControl = false;
     super.initState();
   }
 
@@ -48,11 +53,26 @@ class _TranslatePageState extends State<TranslatePage> {
     double heightSize = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        //resize avoid --> çeviri klavyenin altına geçecek kadar uzun oldugunda
+        //overflow hatası vermemesini, nesnelerin klavyenin altına girmesini sağlıyor.
+        resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green.shade700,
           onPressed: () {
-            _wordService.addWord(enterText, translated);
+            setState(() {
+              if (enterTextController.text.isEmpty) {
+                attentionTextColor = Colors.red;
+                attentionText = "Word can't be empty";
+                emptyControl = true;
+              } else {
+                _wordService.addWord(enterText, translated);
+                attentionTextColor = Colors.yellow;
+                attentionText = 'Last added: ${enterText}';
+                emptyControl = true;
+                enterTextController.clear();
+              }
+            });
           },
           child: const Icon(
             Icons.add,
@@ -93,10 +113,8 @@ class _TranslatePageState extends State<TranslatePage> {
                             padding: EdgeInsets.only(
                               right: heightSize * 0.03,
                             ),
-                            child: Expanded(
-                              child: SizedBox(
-                                child: Image.asset('assets/translateimage.png'),
-                              ),
+                            child: SizedBox(
+                              child: Image.asset('assets/translateimage.png'),
                             ),
                           ),
                           DropdownButtonHideUnderline(
@@ -170,8 +188,19 @@ class _TranslatePageState extends State<TranslatePage> {
                                   )),
                             ],
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 24,
+                            child: Visibility(
+                              visible: emptyControl,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  attentionText,
+                                  style:
+                                      TextStyle(color: attentionTextColor, fontSize: 17, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
                           ),
                           DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
