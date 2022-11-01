@@ -23,9 +23,21 @@ class WordService {
     return ref;
   }
 
+  Stream<QuerySnapshot> getMemoryWords() {
+    var ref = _fireStore.collection(userWordListKey).where("isInMemory", isEqualTo: "true").snapshots();
+
+    return ref;
+  }
+
   List getWordList() {
     var ref = _fireStore.collection(userWordListKey).snapshots();
     return [2, 3];
+  }
+
+  Future<void> addInMemory(String docId) {
+    var ref = _fireStore.collection(userWordListKey).doc(docId).update({'isInMemory': 'true'});
+
+    return ref;
   }
 
   Future<void> removeWord(String docId) {

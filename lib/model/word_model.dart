@@ -14,4 +14,6 @@ class WordModel {
       mean: snapshot["mean"],
     );
   }
+
+  
 }

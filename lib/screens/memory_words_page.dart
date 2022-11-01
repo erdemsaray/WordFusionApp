@@ -4,21 +4,19 @@ import 'package:firebase_login_project/service/word_service.dart';
 import 'package:flutter/material.dart';
 import '../widget/navigation_drawer_widget.dart';
 
-class WordsPage extends StatefulWidget {
-  WordsPage({Key? key}) : super(key: key);
+class MemoryWordsPage extends StatefulWidget {
+  MemoryWordsPage({Key? key}) : super(key: key);
 
   @override
-  State<WordsPage> createState() => _WordsPageState();
+  State<MemoryWordsPage> createState() => _MemoryWordsPageState();
 }
 
-bool isMemoryButtonClicked = false;
-bool isChangeButtonClicked = false;
 bool meanVisible = false;
 bool rightOrLeft = true;
 var valueVisibleList = List<bool>.filled(0, true, growable: true);
 var valueVisibleList2 = List<bool>.filled(1, true, growable: true);
 
-class _WordsPageState extends State<WordsPage> {
+class _MemoryWordsPageState extends State<MemoryWordsPage> {
   final WordService _wordService = WordService();
 
   @override
@@ -40,38 +38,21 @@ class _WordsPageState extends State<WordsPage> {
         drawer: NavigationDrawerWidget(),
         appBar: AppBar(
           actions: [
-            ElevatedButton(
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(0),
-                  backgroundColor: isMemoryButtonClicked
-                      ? MaterialStateProperty.all(Colors.green.shade600)
-                      : MaterialStateProperty.all(Colors.transparent)),
-              onPressed: () {
-                isMemoryButtonClicked = !isMemoryButtonClicked;
-                setState(() {});
-              },
-              child: Icon(Icons.save_alt),
-            ),
             Padding(
-              padding: const EdgeInsets.only(right: 10, left: 2),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor: !rightOrLeft
-                          ? MaterialStateProperty.all(Colors.green.shade600)
-                          : MaterialStateProperty.all(Colors.transparent)),
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
                   onPressed: () {
                     visibleEvery();
                     rightOrLeft = !rightOrLeft;
                     setState(() {});
                   },
-                  child: const Icon(Icons.autorenew_rounded)),
+                  icon: const Icon(Icons.autorenew_rounded)),
             )
           ],
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: AnimatedTextKit(
-            animatedTexts: [WavyAnimatedText("Words")],
+            animatedTexts: [WavyAnimatedText("Words in Memory")],
           ),
           centerTitle: true,
         ),
@@ -85,7 +66,7 @@ class _WordsPageState extends State<WordsPage> {
             child: Padding(
               padding: const EdgeInsets.all(6.0),
               child: StreamBuilder<QuerySnapshot>(
-                  stream: _wordService.getWords(),
+                  stream: _wordService.getMemoryWords(),
                   builder: (context, snapshot) {
                     return !snapshot.hasData
                         ? const Center(child: CircularProgressIndicator())
@@ -113,7 +94,7 @@ class _WordsPageState extends State<WordsPage> {
                                             children: [
                                               InkWell(
                                                   onTap: () => _wordService
-                                                      .removeWord(mypost.id)
+                                                      .addInMemory(mypost.id)
                                                       .then((value) => Navigator.pop(context)),
                                                   child: const Text("Evet")),
                                               const SizedBox(
@@ -213,12 +194,5 @@ class _WordsPageState extends State<WordsPage> {
     } else {
       valueVisibleList2[index] = !valueVisibleList2[index];
     }
-  }
-
-  List getVariables() {
-    Stream<QuerySnapshot<Object?>> snapshot = _wordService.getWords();
-    print(snapshot.first);
-
-    return [2, 4];
   }
 }

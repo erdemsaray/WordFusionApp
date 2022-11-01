@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_login_project/screens/homepage.dart';
 import 'package:firebase_login_project/screens/loginpage.dart';
+import 'package:firebase_login_project/screens/memory_words_page.dart';
 import 'package:firebase_login_project/screens/newuserpage.dart';
 import 'package:firebase_login_project/screens/resetpasswordscreen.dart';
 import 'package:firebase_login_project/screens/speedtestpage.dart';
@@ -44,8 +45,10 @@ class MyApp extends StatelessWidget {
           '/newUserPage': (context) => NewUserPage(),
           '/wordsPage': (context) => WordsPage(),
           '/translatePage': (context) => const TranslatePage(),
-          '/speedTestPage': (context) => SpeedTestPage(),
+          '/speedTestPage': (context) => const SpeedTestPage(),
           '/resetPasswordPage':(context) => ResetPasswordPage(),
+          '/memoryWordsPage':(context) => MemoryWordsPage(),
+
         });
   }
 }

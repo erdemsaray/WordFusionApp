@@ -23,6 +23,11 @@ class NavigationDrawerWidget extends StatelessWidget {
                   onClicked: () => selectedItem(context, 3)),
               buildMenuItem(text: "Words", icon: Icons.book, size: size, onClicked: () => selectedItem(context, 1)),
               buildMenuItem(
+                  text: "Words in Memory",
+                  icon: Icons.save_alt_sharp,
+                  size: size,
+                  onClicked: () => selectedItem(context, 5)),
+              buildMenuItem(
                   text: "Speed Test", icon: Icons.timelapse, size: size, onClicked: () => selectedItem(context, 2)),
               buildMenuItem(
                   text: "Translate",
@@ -74,6 +79,11 @@ class NavigationDrawerWidget extends StatelessWidget {
         Navigator.pop(context);
         Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.pushNamed(context, '/translatePage');
+        break;
+      case 5:
+        Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pushNamed(context, '/memoryWordsPage');
         break;
       default:
     }
