@@ -40,19 +40,24 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: IconButton(
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      backgroundColor: !rightOrLeft
+                          ? MaterialStateProperty.all(Colors.green.shade600)
+                          : MaterialStateProperty.all(Colors.transparent)),
                   onPressed: () {
                     visibleEvery();
                     rightOrLeft = !rightOrLeft;
                     setState(() {});
                   },
-                  icon: const Icon(Icons.autorenew_rounded)),
+                  child: const Icon(Icons.autorenew_rounded)),
             )
           ],
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: AnimatedTextKit(
-            animatedTexts: [WavyAnimatedText("Words in Memory")],
+            animatedTexts: [WavyAnimatedText("Words in the Archive")],
           ),
           centerTitle: true,
         ),
@@ -94,7 +99,7 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                                             children: [
                                               InkWell(
                                                   onTap: () => _wordService
-                                                      .addInMemory(mypost.id)
+                                                      .removeWord(mypost.id)
                                                       .then((value) => Navigator.pop(context)),
                                                   child: const Text("Evet")),
                                               const SizedBox(

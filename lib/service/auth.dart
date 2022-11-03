@@ -18,10 +18,11 @@ class AuthService {
   }
 
   signOut() async {
+    GoogleSignIn.standard().signOut();
     return await _auth.signOut();
   }
 
-  void passwordReset(String email){
+  void passwordReset(String email) {
     _auth.sendPasswordResetEmail(email: email);
   }
 

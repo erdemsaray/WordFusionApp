@@ -132,13 +132,15 @@ class _WordsPageState extends State<WordsPage> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      visibleIndex(index, rightOrLeft);
+                                      visibleIndex(index, rightOrLeft, mypost.id);
                                     });
                                   },
                                   onDoubleTap: () {
-                                    setState(() {
-                                      _showDeleteDialog(BuildContext);
-                                    });
+                                    if (!isMemoryButtonClicked) {
+                                      setState(() {
+                                        _showDeleteDialog(BuildContext);
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     constraints: BoxConstraints(minHeight: size * 4),
@@ -207,11 +209,15 @@ class _WordsPageState extends State<WordsPage> {
     valueVisibleList2.fillRange(0, valueVisibleList2.length, true);
   }
 
-  void visibleIndex(int index, bool value) {
-    if (value) {
-      valueVisibleList[index] = !valueVisibleList[index];
+  void visibleIndex(int index, bool value, String id) {
+    if (isMemoryButtonClicked) {
+      _wordService.addInMemory(id);
     } else {
-      valueVisibleList2[index] = !valueVisibleList2[index];
+      if (value) {
+        valueVisibleList[index] = !valueVisibleList[index];
+      } else {
+        valueVisibleList2[index] = !valueVisibleList2[index];
+      }
     }
   }
 

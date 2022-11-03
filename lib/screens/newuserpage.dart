@@ -1,6 +1,7 @@
 import 'package:firebase_login_project/service/auth.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class NewUserPage extends StatefulWidget {
   NewUserPage({Key? key}) : super(key: key);
@@ -51,49 +52,66 @@ class _NewUserPageState extends State<NewUserPage> {
     );
 
     final password = TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       controller: controllerPasswordA,
       autofocus: false,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
+        hintStyle: TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final passwordAgain = TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       controller: controllerPasswordB,
       autofocus: false,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Retry Password',
+        hintStyle: TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final email = TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       controller: controllerEmail,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       decoration: InputDecoration(
         hintText: 'Email',
+        hintStyle: TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Color.fromARGB(255, 0, 0, 0), Colors.indigo],
+                tileMode: TileMode.mirror)),
+        child: Center(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/newuser.png'),
+                  SizedBox(height: 250, child: Lottie.asset('assets/lottie/createperson.json')),
                   SizedBox(
                     height: 7,
                   ),

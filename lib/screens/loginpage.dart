@@ -1,6 +1,7 @@
 import 'package:firebase_login_project/service/auth.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 //comment satırı
 
 class LoginPage extends StatefulWidget {
@@ -22,31 +23,43 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     final email = TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       controller: controllerEmail,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       decoration: InputDecoration(
         hintText: 'Email',
+        hintStyle: TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final password = TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       controller: controllerPassword,
       autofocus: false,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
+        hintStyle: TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
-    final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+    final loginButton = SizedBox(
+      width: size,
+      height: 40,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: secondColor, padding: const EdgeInsets.all(15)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+          Colors.indigo,
+        )),
         onPressed: () {
           _authService.signIn(controllerEmail.text, controllerPassword.text).then((value) {
             if (value != null) {
@@ -60,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: const Text(
           'Log In',
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.white70, fontSize: 20),
         ),
       ),
     );
@@ -99,47 +112,58 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-            reverse: true,
-            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-            child: SizedBox(
-              height: size * 1.28,
-              child: Column(
-                children: <Widget>[
-                  Expanded(child: SizedBox(height: size / 2)),
-                  Image.asset('assets/loginpageimage.png'),
-                  const SizedBox(height: 20.0),
-                  email,
-                  const SizedBox(height: 8.0),
-                  password,
-                  const SizedBox(height: 5.0),
-                  Flexible(
-                    child: Visibility(
-                        visible: wrongVisibility,
-                        child: const Text(
-                          "Wrong email or password",
-                          style: TextStyle(color: Colors.red),
-                        )),
-                  ),
-                  loginButton,
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.mail_outline),
-                          gmailSign,
-                          const Icon(Icons.lock_reset),
-                          forgotLabel,
-                        ],
-                      ),
-                      newUserLabel,
-                    ],
-                  ),
-                ],
-              ),
-            )),
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Color.fromARGB(255, 0, 0, 0), Colors.indigo],
+                tileMode: TileMode.mirror)),
+        child: Center(
+          child: SingleChildScrollView(
+              reverse: true,
+              padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+              child: SizedBox(
+                height: size * 1.40,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(child: SizedBox(height: size / 2)),
+                    SizedBox(height: 250, child: Lottie.asset('assets/lottie/login.json')),
+                    const SizedBox(height: 20.0),
+                    email,
+                    const SizedBox(height: 8.0),
+                    password,
+                    const SizedBox(height: 5.0),
+                    Flexible(
+                      child: Visibility(
+                          visible: wrongVisibility,
+                          child: const Text(
+                            "Wrong email or password",
+                            style: TextStyle(color: Colors.red),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    loginButton,
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.mail_outline),
+                            gmailSign,
+                            const Icon(Icons.lock_reset),
+                            forgotLabel,
+                          ],
+                        ),
+                        newUserLabel,
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }

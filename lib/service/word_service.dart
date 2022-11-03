@@ -10,15 +10,15 @@ class WordService {
     try {
       var ref = _fireStore.collection(userWordListKey);
 
-      var documentRef = await ref.add({'word': word, 'mean': mean});
-      return WordModel(id: documentRef.id, word: word, mean: mean);
+      var documentRef = await ref.add({'word': word, 'mean': mean, 'isInMemory': 'false'});
+      return WordModel(id: documentRef.id, word: word, mean: mean, isInMemory: false);
     } catch (e) {
       return null;
     }
   }
 
   Stream<QuerySnapshot> getWords() {
-    var ref = _fireStore.collection(userWordListKey).snapshots();
+    var ref = _fireStore.collection(userWordListKey).where("isInMemory", isEqualTo: "false").snapshots();
 
     return ref;
   }
