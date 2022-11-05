@@ -84,7 +84,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextFormField(
-                      
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       controller: controllerMean,
                       keyboardType: TextInputType.text,
@@ -122,28 +121,32 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Expanded(
                             child: SizedBox(
-                                height: 45,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      final icerikUygunMu = formKey.currentState?.validate();
+                          height: 45,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                final icerikUygunMu = formKey.currentState?.validate();
 
-                                      if (icerikUygunMu == true) {
-                                        _wordService.addWord(controllerWord.text.trim(), controllerMean.text.trim());
-                                        setState(() {
-                                          statusText = "Last added word: ${controllerWord.text}";
-                                          controllerWord.clear();
-                                          controllerMean.clear();
-                                          lastWordStatus = true;
+                                if (icerikUygunMu == true) {
+                                  _wordService.addWord(controllerWord.text.trim(), controllerMean.text.trim());
+                                  setState(() {
+                                    statusText = "Last added word: ${controllerWord.text}";
+                                    controllerWord.clear();
+                                    controllerMean.clear();
+                                    lastWordStatus = true;
 
-                                          //focusu öncekine geri alir.
-                                          FocusScope.of(context).previousFocus();
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      "Save New Word",
-                                    ),
-                                    style: ElevatedButton.styleFrom(backgroundColor: secondColor)))),
+                                    //focusu öncekine geri alir.
+                                    FocusScope.of(context).previousFocus();
+                                  });
+                                }
+                              },
+                              child: const Text(
+                                "Save New Word",
+                              ),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                Colors.indigo,
+                              ))),
+                        ))
                       ],
                     ),
                   ],

@@ -15,10 +15,7 @@ class SpeedTestPage extends StatefulWidget {
   State<SpeedTestPage> createState() => _SpeedTestPageState();
 }
 
-Color card0Color = Colors.indigo;
-Color card1Color = Colors.indigo;
-Color card2Color = Colors.indigo;
-Color card3Color = Colors.indigo;
+Color cardColor = Color.fromARGB(255, 40, 56, 146);
 
 Timer? timer;
 int kalanSure = 60;
@@ -34,6 +31,7 @@ bool card3answer = false;
 bool card2answer = false;
 bool card1answer = false;
 bool card0answer = false;
+RoundedRectangleBorder cardShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15));
 
 void soruHazirla() {
   cevaplar.clear();
@@ -130,210 +128,100 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                       Colors.green.shade400,
                       Colors.blue.shade900,
                     ])),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: Container(
-                            height: size.height * 3,
-                            decoration: const BoxDecoration(
-                                //image: DecorationImage(alignment: Alignment.topCenter, image: AssetImage('assets/topheader.png'
-                                //)
-                                //)
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                color: cardColor,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                        height: 70,
+                                        child: Icon(
+                                          Icons.star,
+                                          size: 30,
+                                          color: Colors.white,
+                                        )),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Text(
+                                      questionWord,
+                                      style: const TextStyle(
+                                          fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                          ),
-                        ),
-                        SafeArea(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 10,
-                                    left: 10,
-                                    top: 40,
-                                  ),
-                                  child: Card(
-                                    color: Colors.indigo,
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Row(
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 150,
+                                      child: Card(
+                                        shape: cardShape,
+                                        color: cardColor,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            card0answer = dogruMu(cevaplar[0]);
+                                            if (card0answer == true) {
+                                              puan++;
+                                              setState(() {});
+                                            } else {
+                                              wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
+                                              puan--;
+                                              setState(() {});
+                                            }
+
+                                            yeniSoruyaGec();
+                                          },
+                                          splashColor: Colors.blue,
+                                          child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              const SizedBox(
-                                                  height: 70,
-                                                  child: Icon(
-                                                    Icons.star,
-                                                    size: 30,
-                                                    color: Colors.white,
-                                                  )),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              Text(
-                                                questionWord,
-                                                style: const TextStyle(
-                                                    fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                              Center(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 35),
+                                                  child: Text(
+                                                    cevaplar[0],
+                                                    style: const TextStyle(
+                                                        fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 10,
-                                      left: 10,
-                                    ),
-                                    child: GridView.count(
-                                      crossAxisCount: 2,
-                                      children: [
-                                        Card(
-                                          color: card0answer ? Colors.green : card0Color,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              card0answer = dogruMu(cevaplar[0]);
-                                              if (card0answer == true) {
-                                                puan++;
-                                                setState(() {});
-                                              } else {
-                                                card0Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
-                                                puan--;
-                                                setState(() {});
-                                              }
+                                  Expanded(
+                                    child: Container(
+                                      height: 150,
+                                      child: Card(
+                                        shape: cardShape,
+                                        color: cardColor,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            card1answer = dogruMu(cevaplar[1]);
+                                            if (card1answer == true) {
+                                              puan++;
+                                              setState(() {});
+                                            } else {
+                                              wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
+                                              puan--;
+                                              setState(() {});
+                                            }
 
-                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
-                                              yeniSoruyaGec();
-                                            },
-                                            splashColor: Colors.blue,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Expanded(
-                                                  child: Center(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 35),
-                                                      child: Text(
-                                                        cevaplar[0],
-                                                        style: const TextStyle(
-                                                            fontSize: 17,
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Card(
-                                          color: card1answer ? Colors.green : card1Color,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              card1answer = dogruMu(cevaplar[1]);
-                                              if (card1answer == true) {
-                                                puan++;
-                                                setState(() {});
-                                              } else {
-                                                card1Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
-                                                puan--;
-                                                setState(() {});
-                                              }
-                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
-                                              yeniSoruyaGec();
-                                            },
-                                            splashColor: Colors.blue,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                                                    child: Text(
-                                                      cevaplar[1],
-                                                      style: const TextStyle(
-                                                          fontSize: 17,
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Card(
-                                          color: card2answer ? Colors.green : card2Color,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              card2answer = dogruMu(cevaplar[2]);
-                                              if (card2answer == true) {
-                                                puan++;
-                                                setState(() {});
-                                              } else {
-                                                card2Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
-                                                puan--;
-                                                setState(() {});
-                                              }
-                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
-                                              yeniSoruyaGec();
-                                            },
-                                            splashColor: Colors.blue,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 35),
-                                                    child: Text(
-                                                      cevaplar[2],
-                                                      style: const TextStyle(
-                                                          fontSize: 17,
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Card(
-                                          color: card3answer ? Colors.green : card3Color,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              card3answer = dogruMu(cevaplar[3]);
-                                              if (card3answer == true) {
-                                                puan++;
-                                                setState(() {});
-                                              } else {
-                                                card3Color = Colors.red;
-                                                wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
-                                                puan--;
-                                                setState(() {});
-                                              }
-
-                                              await Future.delayed(Duration(milliseconds: gecikmeSuresi));
-                                              yeniSoruyaGec();
-                                            },
-                                            splashColor: Colors.blue,
+                                            yeniSoruyaGec();
+                                          },
+                                          splashColor: Colors.blue,
+                                          child: Center(
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -342,7 +230,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                                 Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 35.0),
                                                   child: Text(
-                                                    cevaplar[3],
+                                                    cevaplar[1],
                                                     style: const TextStyle(
                                                         fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
                                                   ),
@@ -351,28 +239,115 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                             ),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                DefaultTextStyle(
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text("Score: ${puan}"),
-                                      Text("Time: ${kalanSure}"),
-                                    ],
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 150,
+                                      child: Card(
+                                        shape: cardShape,
+                                        color: cardColor,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            card2answer = dogruMu(cevaplar[2]);
+                                            if (card2answer == true) {
+                                              puan++;
+                                              setState(() {});
+                                            } else {
+                                              wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
+                                              puan--;
+                                              setState(() {});
+                                            }
+
+                                            yeniSoruyaGec();
+                                          },
+                                          splashColor: Colors.blue,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 35),
+                                                  child: Text(
+                                                    cevaplar[2],
+                                                    style: const TextStyle(
+                                                        fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 110,
-                                )
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 150,
+                                      child: Card(
+                                        shape: cardShape,
+                                        color: cardColor,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            card3answer = dogruMu(cevaplar[3]);
+                                            if (card3answer == true) {
+                                              puan++;
+                                              setState(() {});
+                                            } else {
+                                              wrongWords.add("$questionWord => ${kelimeler[questionWord]}");
+                                              puan--;
+                                              setState(() {});
+                                            }
+
+                                            yeniSoruyaGec();
+                                          },
+                                          splashColor: Colors.blue,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                                                child: Text(
+                                                  cevaplar[3],
+                                                  style: const TextStyle(
+                                                      fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          DefaultTextStyle(
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text("Score: ${puan}"),
+                                Text("Time: ${kalanSure}"),
                               ],
                             ),
                           ),
-                        )
-                      ],
+                          const SizedBox(
+                            height: 110,
+                          )
+                        ],
+                      ),
                     ),
                   );
           }),
@@ -388,24 +363,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   }
 
   void yeniSoruyaGec() {
-    card0Color = Colors.indigo;
-    card1Color = Colors.indigo;
-    card2Color = Colors.indigo;
-    card3Color = Colors.indigo;
-    card3answer = false;
-    card2answer = false;
-    card1answer = false;
-    card0answer = false;
     soruHazirla();
     setState(() {});
-  }
-
-  bool yanlisVarMi() {
-    if (card0Color == Colors.red || card1Color == Colors.red || card2Color == Colors.red || card3Color == Colors.red) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   void startTimer() {
