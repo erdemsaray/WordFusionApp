@@ -15,6 +15,7 @@ bool meanVisible = false;
 bool rightOrLeft = true;
 var valueVisibleList = List<bool>.filled(0, true, growable: true);
 var valueVisibleList2 = List<bool>.filled(1, true, growable: true);
+bool isMemoryButtonClicked = false;
 
 class _MemoryWordsPageState extends State<MemoryWordsPage> {
   final WordService _wordService = WordService();
@@ -38,8 +39,21 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
         drawer: NavigationDrawerWidget(),
         appBar: AppBar(
           actions: [
+            ElevatedButton(
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0),
+                  backgroundColor: isMemoryButtonClicked
+                      ? MaterialStateProperty.all(Colors.green.shade600)
+                      : MaterialStateProperty.all(Colors.transparent)),
+              onPressed: () {
+                setState(() {
+                  isMemoryButtonClicked = !isMemoryButtonClicked;
+                });
+              },
+              child: Icon(Icons.arrow_upward_sharp),
+            ),
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 0),
               child: ElevatedButton(
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
@@ -57,7 +71,7 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: AnimatedTextKit(
-            animatedTexts: [WavyAnimatedText("Words in the Archive")],
+            animatedTexts: [WavyAnimatedText("Archive")],
           ),
           centerTitle: true,
         ),
@@ -118,7 +132,7 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      visibleIndex(index, rightOrLeft);
+                                      visibleIndex(index, rightOrLeft, mypost.id);
                                     });
                                   },
                                   onDoubleTap: () {
@@ -129,10 +143,13 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                                   child: Container(
                                     constraints: BoxConstraints(minHeight: size * 4),
                                     decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(25), right: Radius.circular(25)),
-                                      color: Colors.indigo,
-                                    ),
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(25), right: Radius.circular(25)),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [Color.fromARGB(255, 4, 42, 66), Colors.indigo],
+                                            tileMode: TileMode.mirror)),
                                     child: Padding(
                                       padding: EdgeInsets.only(right: size, left: size),
                                       child: Container(
@@ -193,11 +210,15 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
     valueVisibleList2.fillRange(0, valueVisibleList2.length, true);
   }
 
-  void visibleIndex(int index, bool value) {
-    if (value) {
-      valueVisibleList[index] = !valueVisibleList[index];
+  void visibleIndex(int index, bool value, String id) {
+    if (isMemoryButtonClicked) {
+      _wordService.removeInMemory(id);
     } else {
-      valueVisibleList2[index] = !valueVisibleList2[index];
+      if (value) {
+        valueVisibleList[index] = !valueVisibleList[index];
+      } else {
+        valueVisibleList2[index] = !valueVisibleList2[index];
+      }
     }
   }
 }

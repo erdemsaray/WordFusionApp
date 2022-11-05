@@ -21,19 +21,21 @@ class _NewUserPageState extends State<NewUserPage> {
   Widget build(BuildContext context) {
     Color secondColor = ColorItems.mainColor;
     final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         children: [
           Expanded(
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: secondColor, padding: const EdgeInsets.all(15)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                  minimumSize: MaterialStateProperty.all(Size(24, 46))),
               onPressed: () {
                 if (passwordControl(controllerPasswordA.text, controllerPasswordB.text)) {
                   if (emailFormatControl(controllerEmail.text)) {
                     _authCreateService.createPerson(controllerEmail.text, controllerPasswordA.text);
                     Navigator.pop(context);
                   } else {
-                    inputWrongResult = 'A valid email is required';
+                    inputWrongResult = 'Please check your e-mail format';
                   }
                 } else {
                   inputWrongResult = 'Passwords must be at least 6 characters and equals';

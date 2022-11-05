@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   var controllerPassword = TextEditingController();
   bool wrongVisibility = false;
   Color secondColor = ColorItems.mainColor;
+  String validationText = ' ';
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.pushReplacementNamed(context, '/homePage');
             } else {
               setState(() {
-                wrongVisibility = true;
+                validationText = "Please check your e-mail or password";
               });
             }
           });
@@ -84,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
+        validationText = '';
         Navigator.pushNamed(context, '/resetPasswordPage');
       },
     );
@@ -92,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
       const Text("Don't have an Account?"),
       TextButton(
           onPressed: () {
+            validationText = ' ';
             Navigator.pushNamed(context, '/newUserPage');
           },
           child: const Text("Sign Up"))
@@ -135,12 +138,10 @@ class _LoginPageState extends State<LoginPage> {
                     password,
                     const SizedBox(height: 5.0),
                     Flexible(
-                      child: Visibility(
-                          visible: wrongVisibility,
-                          child: const Text(
-                            "Wrong email or password",
-                            style: TextStyle(color: Colors.red),
-                          )),
+                      child: Text(
+                        validationText,
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                     SizedBox(
                       height: 10,

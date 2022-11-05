@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
 
   final formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
@@ -85,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextFormField(
+                      
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       controller: controllerMean,
                       keyboardType: TextInputType.text,

@@ -145,10 +145,13 @@ class _WordsPageState extends State<WordsPage> {
                                   child: Container(
                                     constraints: BoxConstraints(minHeight: size * 4),
                                     decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(25), right: Radius.circular(25)),
-                                      color: Colors.indigo,
-                                    ),
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(25), right: Radius.circular(25)),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [Color.fromARGB(255, 4, 42, 66), Colors.indigo],
+                                            tileMode: TileMode.mirror)),
                                     child: Padding(
                                       padding: EdgeInsets.only(right: size, left: size),
                                       child: Container(

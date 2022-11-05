@@ -19,17 +19,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     Color secondColor = ColorItems.mainColor;
     final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
           Expanded(
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: secondColor, padding: const EdgeInsets.all(15)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                  minimumSize: MaterialStateProperty.all(Size(24, 46))),
               onPressed: () {
                 setState(() {
-                  _authCreateService.passwordReset(controllerEmail.text);
-                  print(controllerEmail.text);
-                  Navigator.pop(context);
+                  if (emailFormatControl(controllerEmail.text)) {
+                    _authCreateService.passwordReset(controllerEmail.text);
+                    controllerEmail.clear();
+                    Navigator.pop(context);
+                  } else {
+                    inputWrongResult = 'Please check your e-mail format.';
+                  }
                 });
               },
               child: const Text(

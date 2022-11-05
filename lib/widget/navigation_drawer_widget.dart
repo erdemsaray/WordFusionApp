@@ -11,8 +11,13 @@ class NavigationDrawerWidget extends StatelessWidget {
     double size = MediaQuery.of(context).size.width * 0.1;
 
     return Drawer(
-      child: Material(
-          color: ColorItems.mainColor,
+      child: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Color.fromARGB(255, 4, 42, 66), Colors.indigo],
+                  tileMode: TileMode.mirror)),
           child: Column(
             children: <Widget>[
               SizedBox(height: size * 1.5),

@@ -31,11 +31,18 @@ class WordService {
 
   List getWordList() {
     var ref = _fireStore.collection(userWordListKey).snapshots();
+    //print(ref);
     return [2, 3];
   }
 
   Future<void> addInMemory(String docId) {
     var ref = _fireStore.collection(userWordListKey).doc(docId).update({'isInMemory': 'true'});
+
+    return ref;
+  }
+
+  Future<void> removeInMemory(String docId) {
+    var ref = _fireStore.collection(userWordListKey).doc(docId).update({'isInMemory': 'false'});
 
     return ref;
   }
