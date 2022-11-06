@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_login_project/screens/testresultpage.dart';
+import 'package:firebase_login_project/screens/translatepage.dart';
 import 'package:firebase_login_project/service/word_service.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,13 @@ bool card2answer = false;
 bool card1answer = false;
 bool card0answer = false;
 RoundedRectangleBorder cardShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15));
+var boxdecoration = const BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(15)),
+    gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [Color.fromARGB(255, 4, 42, 66), Colors.indigo],
+        tileMode: TileMode.mirror));
 
 void soruHazirla() {
   cevaplar.clear();
@@ -129,42 +137,46 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                       Colors.blue.shade900,
                     ])),
                     child: SafeArea(
-                      child: Column(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                color: cardColor,
-                                child: Row(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  decoration: boxdecoration,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                          height: 70,
+                                          child: Icon(
+                                            Icons.star,
+                                            size: 30,
+                                            color: Colors.white,
+                                          )),
+                                      const SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        questionWord,
+                                        style: const TextStyle(
+                                            fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 7,
+                                ),
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const SizedBox(
-                                        height: 70,
-                                        child: Icon(
-                                          Icons.star,
-                                          size: 30,
-                                          color: Colors.white,
-                                        )),
-                                    const SizedBox(
-                                      width: 6,
-                                    ),
-                                    Text(
-                                      questionWord,
-                                      style: const TextStyle(
-                                          fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 150,
-                                      child: Card(
-                                        shape: cardShape,
-                                        color: cardColor,
+                                    Expanded(
+                                      child: Container(
+                                        decoration: boxdecoration,
+                                        height: 150,
                                         child: InkWell(
                                           onTap: () async {
                                             card0answer = dogruMu(cevaplar[0]);
@@ -199,13 +211,13 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 150,
-                                      child: Card(
-                                        shape: cardShape,
-                                        color: cardColor,
+                                    SizedBox(
+                                      width: 7,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: boxdecoration,
+                                        height: 150,
                                         child: InkWell(
                                           onTap: () async {
                                             card1answer = dogruMu(cevaplar[1]);
@@ -241,18 +253,18 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 150,
-                                      child: Card(
-                                        shape: cardShape,
-                                        color: cardColor,
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        decoration: boxdecoration,
+                                        height: 150,
                                         child: InkWell(
                                           onTap: () async {
                                             card2answer = dogruMu(cevaplar[2]);
@@ -288,13 +300,13 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: 150,
-                                      child: Card(
-                                        shape: cardShape,
-                                        color: cardColor,
+                                    SizedBox(
+                                      width: 7,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: boxdecoration,
+                                        height: 150,
                                         child: InkWell(
                                           onTap: () async {
                                             card3answer = dogruMu(cevaplar[3]);
@@ -328,25 +340,28 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          DefaultTextStyle(
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text("Score: ${puan}"),
-                                Text("Time: ${kalanSure}"),
+                                  ],
+                                ),
                               ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 110,
-                          )
-                        ],
+                            SizedBox(
+                              height: 30,
+                            ),
+                            DefaultTextStyle(
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text("Score: ${puan}"),
+                                  Text("Time: ${kalanSure}"),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 110,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );

@@ -18,11 +18,27 @@ String translated = "Translation";
 String translatedValue = "Translation";
 bool emptyControl = false;
 
-final languageItems = ['English (EN)', 'Turkish (TR)'];
+final languageItems = [
+  'English (EN)',
+  'Turkish (TR)',
+  'Russian (RU)',
+  'German (DE)',
+  'Chinese (ZH)',
+  'French (FR)',
+  'Spanish (ES)'
+];
+
+//'fr': 'French',
+//'es': 'Spanish',
 
 Map languageWithCode = {
   'English (EN)': 'en',
   'Turkish (TR)': 'tr',
+  'Russian (RU)': 'ru',
+  'German (DE)': 'de',
+  'Chinese (ZH)': 'zh-cn',
+  'French (FR)': 'fr',
+  'Spanish (ES)': 'es'
 };
 
 class _TranslatePageState extends State<TranslatePage> {
