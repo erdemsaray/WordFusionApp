@@ -10,14 +10,36 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> with TickerProviderStateMixin {
+  AnimationController? lottieController;
   static var controllerEmail = TextEditingController();
   final AuthService _authCreateService = AuthService();
   String inputWrongResult = '';
 
   @override
+  void initState() {
+    super.initState();
+
+    lottieController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
+
+    lottieController!.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        Navigator.pop(context);
+        lottieController!.reset();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    lottieController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Color secondColor = ColorItems.mainColor;
+    double widthSize = MediaQuery.of(context).size.width;
+    bool progressAnimateIsActive = false;
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
@@ -26,13 +48,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.indigo),
-                  minimumSize: MaterialStateProperty.all(Size(24, 46))),
+                  minimumSize: MaterialStateProperty.all(const Size(24, 46))),
               onPressed: () {
                 setState(() {
                   if (emailFormatControl(controllerEmail.text)) {
                     _authCreateService.passwordReset(controllerEmail.text);
+                    progressAnimateIsActive = true;
+                    lottieController!.forward();
                     controllerEmail.clear();
-                    Navigator.pop(context);
                   } else {
                     inputWrongResult = 'Please check your e-mail format.';
                   }
@@ -57,7 +80,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       autofocus: false,
       decoration: InputDecoration(
         hintText: 'Email',
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -80,13 +103,28 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 250, child: Lottie.asset('assets/lottie/resetpassword.json')),
+                  const SizedBox(
+                    height: 3,
+                  ),
                   SizedBox(
-                    height: 7,
+                    width: widthSize,
+                    height: 40,
+                    child: Lottie.asset(
+                      'assets/lottie/turquiseprogressbar.json',
+                      fit: BoxFit.fill,
+                      repeat: false,
+                      animate: false,
+                      controller: lottieController,
+                      onLoaded: (p0) {},
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 3,
                   ),
                   email,
                   Text(
                     inputWrongResult,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
                   loginButton,
                 ],

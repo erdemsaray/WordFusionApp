@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.width;
     double heightSize = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -144,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 21, 45, 179),
+                                const Color.fromARGB(255, 21, 45, 179),
                               ))),
                         ))
                       ],
