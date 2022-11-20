@@ -32,7 +32,7 @@ class _TestResultPageState extends State<TestResultPage> {
         constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.green.shade400, Colors.blue.shade900])),
         child: SafeArea(
-          child: Container(
+          child: SizedBox(
             width: screenWidth - 100,
             height: screenHeight - 200,
             child: Column(

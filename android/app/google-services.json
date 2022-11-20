@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "804868111526-pau51vhg23b5iirrt9in1b2nooiqftom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.funnywordslearn.app",
+            "certificate_hash": "09e14523ed6be75eb2e4d6c35c2de3e2ff40d74b"
+          }
+        },
+        {
           "client_id": "804868111526-5p6p0f9s4mc9qkrapahuequuvthp4a4b.apps.googleusercontent.com",
           "client_type": 3
         }

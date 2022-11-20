@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_login_project/screens/appdetailspage.dart';
 import 'package:firebase_login_project/service/word_service.dart';
 import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:firebase_login_project/widget/navigation_drawer_widget.dart';
@@ -38,6 +39,16 @@ class _HomePageState extends State<HomePage> {
           animatedTexts: [WavyAnimatedText("Add a New Word")],
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => (const AppDetailsPage())),
+                );
+              },
+              icon: const Icon(Icons.question_mark_sharp))
+        ],
       ),
       body: Container(
         height: heightSize,
@@ -79,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                               return null;
                             }
                           }
+                          return null;
                         },
                       ),
                     ),

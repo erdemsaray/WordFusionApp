@@ -14,7 +14,6 @@ class TranslatePage extends StatefulWidget {
 }
 
 String enterText = "Enter Text";
-String translated = "Translation";
 String translatedValue = "Translation";
 bool emptyControl = false;
 
@@ -43,6 +42,8 @@ Map languageWithCode = {
 
 class _TranslatePageState extends State<TranslatePage> {
   TextEditingController enterTextController = TextEditingController();
+  TextEditingController translatedTextController = TextEditingController();
+
   final _wordService = WordService();
 
   String? value = 'English (EN)';
@@ -54,7 +55,7 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   void initState() {
-    translated = "Translation";
+    translatedTextController.text = "Translation";
     emptyControl = false;
     super.initState();
   }
@@ -73,27 +74,6 @@ class _TranslatePageState extends State<TranslatePage> {
         //overflow hatası vermemesini, nesnelerin klavyenin altına girmesini sağlıyor.
         resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.green.shade700,
-          onPressed: () {
-            setState(() {
-              if (enterTextController.text.isEmpty) {
-                attentionTextColor = Colors.red;
-                attentionText = "Word can't be empty";
-                emptyControl = true;
-              } else {
-                _wordService.addWord(enterText, translated);
-                attentionTextColor = Colors.yellow;
-                attentionText = 'Last added: ${enterText}';
-                emptyControl = true;
-                enterTextController.clear();
-              }
-            });
-          },
-          child: const Icon(
-            Icons.add,
-          ),
-        ),
         drawer: NavigationDrawerWidget(),
         appBar: AppBar(
           elevation: 0,
@@ -127,7 +107,8 @@ class _TranslatePageState extends State<TranslatePage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              right: heightSize * 0.03,
+                              left: heightSize * 0.02,
+                              right: heightSize * 0.05,
                             ),
                             child: SizedBox(
                               child: Image.asset('assets/translateimage.png'),
@@ -135,7 +116,7 @@ class _TranslatePageState extends State<TranslatePage> {
                           ),
                           DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              dropdownColor: Colors.transparent,
+                              dropdownColor: ColorItems.dropdownColor,
                               style: const TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
@@ -150,6 +131,7 @@ class _TranslatePageState extends State<TranslatePage> {
                             children: [
                               Expanded(
                                 child: TextField(
+                                  scrollPhysics: BouncingScrollPhysics(),
                                   controller: enterTextController,
                                   style: const TextStyle(
                                       fontSize: 36, fontWeight: FontWeight.bold, color: ColorItems.translateBlue),
@@ -184,7 +166,7 @@ class _TranslatePageState extends State<TranslatePage> {
 
                                     if (mounted) {
                                       setState(() {
-                                        translated = translatedValue;
+                                        translatedTextController.text = translatedValue;
                                       });
                                     }
                                   },
@@ -220,7 +202,7 @@ class _TranslatePageState extends State<TranslatePage> {
                           ),
                           DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              dropdownColor: Colors.transparent,
+                              dropdownColor: ColorItems.dropdownColor,
                               style: const TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
@@ -233,10 +215,26 @@ class _TranslatePageState extends State<TranslatePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            enterTextController.text.isEmpty ? "Translation" : translated,
-                            style: const TextStyle(
-                                color: ColorItems.translateBlue, fontWeight: FontWeight.bold, fontSize: 36),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  scrollPhysics: const BouncingScrollPhysics(),
+                                  controller: translatedTextController,
+                                  style: const TextStyle(
+                                      color: ColorItems.translateBlue, fontWeight: FontWeight.bold, fontSize: 36),
+                                ),
+                              ),
+                              IconButton(
+                                  color: Colors.white70,
+                                  onPressed: () {
+                                    kelimeEkle();
+                                  },
+                                  icon: const Icon(
+                                    Icons.add_circle_outline,
+                                    size: 45,
+                                  )),
+                            ],
                           ),
                         ],
                       ),
@@ -255,4 +253,20 @@ class _TranslatePageState extends State<TranslatePage> {
           item,
         ),
       );
+
+  void kelimeEkle() {
+    setState(() {
+      if (enterTextController.text.isEmpty) {
+        attentionTextColor = Colors.red;
+        attentionText = "Word can't be empty";
+        emptyControl = true;
+      } else {
+        _wordService.addWord(enterText, translatedTextController.text);
+        attentionTextColor = Colors.yellow;
+        attentionText = 'Last added: ${enterText}';
+        emptyControl = true;
+        enterTextController.clear();
+      }
+    });
+  }
 }

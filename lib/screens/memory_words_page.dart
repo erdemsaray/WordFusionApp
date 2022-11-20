@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../widget/navigation_drawer_widget.dart';
 
 class MemoryWordsPage extends StatefulWidget {
-  MemoryWordsPage({Key? key}) : super(key: key);
+  const MemoryWordsPage({Key? key}) : super(key: key);
 
   @override
   State<MemoryWordsPage> createState() => _MemoryWordsPageState();
@@ -50,7 +50,7 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                   isMemoryButtonClicked = !isMemoryButtonClicked;
                 });
               },
-              child: Icon(Icons.arrow_upward_sharp),
+              child: const Icon(Icons.arrow_upward_sharp),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 0),
@@ -96,7 +96,7 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                               valueVisibleList.add(false);
                               DocumentSnapshot mypost = snapshot.data!.docs[index];
 
-                              Future<void> _showDeleteDialog(BuildContext) {
+                              Future<void> _showDeleteDialog(buildContext) {
                                 return showDialog(
                                     context: context,
                                     builder: (context) {

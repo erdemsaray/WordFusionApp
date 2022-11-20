@@ -422,6 +422,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.4"
+  screen_size_test:
+    dependency: "direct main"
+    description:
+      name: screen_size_test
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2+3"
   sky_engine:
     dependency: transitive
     description: flutter

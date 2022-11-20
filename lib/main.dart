@@ -46,9 +46,8 @@ class MyApp extends StatelessWidget {
           '/wordsPage': (context) => WordsPage(),
           '/translatePage': (context) => const TranslatePage(),
           '/speedTestPage': (context) => const SpeedTestPage(),
-          '/resetPasswordPage':(context) => ResetPasswordPage(),
-          '/memoryWordsPage':(context) => MemoryWordsPage(),
-
+          '/resetPasswordPage': (context) => ResetPasswordPage(),
+          '/memoryWordsPage': (context) => MemoryWordsPage(),
         });
   }
 }
