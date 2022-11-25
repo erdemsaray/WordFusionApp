@@ -1,10 +1,9 @@
 import 'package:firebase_login_project/service/auth.dart';
-import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class NewUserPage extends StatefulWidget {
-  NewUserPage({Key? key}) : super(key: key);
+  const NewUserPage({Key? key}) : super(key: key);
 
   @override
   State<NewUserPage> createState() => _NewUserPageState();
@@ -19,7 +18,6 @@ class _NewUserPageState extends State<NewUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    Color secondColor = ColorItems.mainColor;
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
@@ -28,7 +26,7 @@ class _NewUserPageState extends State<NewUserPage> {
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.indigo),
-                  minimumSize: MaterialStateProperty.all(Size(24, 46))),
+                  minimumSize: MaterialStateProperty.all(const Size(24, 46))),
               onPressed: () {
                 if (passwordControl(controllerPasswordA.text, controllerPasswordB.text)) {
                   if (emailFormatControl(controllerEmail.text)) {
@@ -62,7 +60,7 @@ class _NewUserPageState extends State<NewUserPage> {
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -77,7 +75,7 @@ class _NewUserPageState extends State<NewUserPage> {
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Retry Password',
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -92,7 +90,7 @@ class _NewUserPageState extends State<NewUserPage> {
       autofocus: false,
       decoration: InputDecoration(
         hintText: 'Email',
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -114,7 +112,7 @@ class _NewUserPageState extends State<NewUserPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 250, child: Lottie.asset('assets/lottie/createperson.json')),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
                   email,
@@ -125,7 +123,7 @@ class _NewUserPageState extends State<NewUserPage> {
                   passwordAgain,
                   Text(
                     inputWrongResult,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
                   loginButton,
                 ],

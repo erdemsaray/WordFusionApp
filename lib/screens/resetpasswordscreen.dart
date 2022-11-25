@@ -1,10 +1,9 @@
 import 'package:firebase_login_project/service/auth.dart';
-import 'package:firebase_login_project/utils/project_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  ResetPasswordPage({Key? key}) : super(key: key);
+  const ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -39,7 +38,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with TickerProvid
   @override
   Widget build(BuildContext context) {
     double widthSize = MediaQuery.of(context).size.width;
-    bool progressAnimateIsActive = false;
     final loginButton = Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
@@ -53,7 +51,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with TickerProvid
                 setState(() {
                   if (emailFormatControl(controllerEmail.text)) {
                     _authCreateService.passwordReset(controllerEmail.text);
-                    progressAnimateIsActive = true;
                     lottieController!.forward();
                     controllerEmail.clear();
                   } else {

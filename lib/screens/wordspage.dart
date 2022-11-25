@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../widget/navigation_drawer_widget.dart';
 
 class WordsPage extends StatefulWidget {
-  WordsPage({Key? key}) : super(key: key);
+  const WordsPage({Key? key}) : super(key: key);
 
   @override
   State<WordsPage> createState() => _WordsPageState();
@@ -50,7 +50,7 @@ class _WordsPageState extends State<WordsPage> {
                 isMemoryButtonClicked = !isMemoryButtonClicked;
                 setState(() {});
               },
-              child: Icon(Icons.save_alt),
+              child: const Icon(Icons.save_alt),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10, left: 2),
@@ -107,21 +107,19 @@ class _WordsPageState extends State<WordsPage> {
                                             Radius.circular(10),
                                           ),
                                         ),
-                                        content: Container(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  onTap: () => _wordService
-                                                      .removeWord(mypost.id)
-                                                      .then((value) => Navigator.pop(context)),
-                                                  child: const Text("Evet")),
-                                              const SizedBox(
-                                                width: 40,
-                                              ),
-                                              InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
-                                            ],
-                                          ),
+                                        content: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                                onTap: () => _wordService
+                                                    .removeWord(mypost.id)
+                                                    .then((value) => Navigator.pop(context)),
+                                                child: const Text("Evet")),
+                                            const SizedBox(
+                                              width: 40,
+                                            ),
+                                            InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
+                                          ],
                                         ),
                                       );
                                     });
@@ -154,38 +152,36 @@ class _WordsPageState extends State<WordsPage> {
                                             tileMode: TileMode.mirror)),
                                     child: Padding(
                                       padding: EdgeInsets.only(right: size, left: size),
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Visibility(
-                                                visible: valueVisibleList2[index],
-                                                child: Text(
-                                                  "${mypost[boxFirst]}",
-                                                  style: const TextStyle(
-                                                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-                                            const Text(
-                                              ": ",
-                                              style: TextStyle(
-                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                                child: Visibility(
-                                              visible: valueVisibleList[index],
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Visibility(
+                                              visible: valueVisibleList2[index],
                                               child: Text(
-                                                "${mypost[boxSecond]}",
+                                                "${mypost[boxFirst]}",
                                                 style: const TextStyle(
                                                     color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                               ),
-                                            ))
-                                          ],
-                                        ),
+                                            ),
+                                          ),
+                                          const Text(
+                                            ": ",
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                              child: Visibility(
+                                            visible: valueVisibleList[index],
+                                            child: Text(
+                                              "${mypost[boxSecond]}",
+                                              style: const TextStyle(
+                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                          ))
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -226,7 +222,7 @@ class _WordsPageState extends State<WordsPage> {
 
   List getVariables() {
     Stream<QuerySnapshot<Object?>> snapshot = _wordService.getWords();
-    print(snapshot.first);
+    //print(snapshot.first);
 
     return [2, 4];
   }

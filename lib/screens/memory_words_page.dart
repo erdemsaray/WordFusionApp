@@ -107,21 +107,19 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                                             Radius.circular(10),
                                           ),
                                         ),
-                                        content: Container(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  onTap: () => _wordService
-                                                      .removeWord(mypost.id)
-                                                      .then((value) => Navigator.pop(context)),
-                                                  child: const Text("Evet")),
-                                              const SizedBox(
-                                                width: 40,
-                                              ),
-                                              InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
-                                            ],
-                                          ),
+                                        content: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                                onTap: () => _wordService
+                                                    .removeWord(mypost.id)
+                                                    .then((value) => Navigator.pop(context)),
+                                                child: const Text("Evet")),
+                                            const SizedBox(
+                                              width: 40,
+                                            ),
+                                            InkWell(onTap: () => Navigator.pop(context), child: const Text("Hayır"))
+                                          ],
                                         ),
                                       );
                                     });
@@ -152,38 +150,36 @@ class _MemoryWordsPageState extends State<MemoryWordsPage> {
                                             tileMode: TileMode.mirror)),
                                     child: Padding(
                                       padding: EdgeInsets.only(right: size, left: size),
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Visibility(
-                                                visible: valueVisibleList2[index],
-                                                child: Text(
-                                                  "${mypost[boxFirst]}",
-                                                  style: const TextStyle(
-                                                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-                                            const Text(
-                                              ": ",
-                                              style: TextStyle(
-                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                                child: Visibility(
-                                              visible: valueVisibleList[index],
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Visibility(
+                                              visible: valueVisibleList2[index],
                                               child: Text(
-                                                "${mypost[boxSecond]}",
+                                                "${mypost[boxFirst]}",
                                                 style: const TextStyle(
                                                     color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                               ),
-                                            ))
-                                          ],
-                                        ),
+                                            ),
+                                          ),
+                                          const Text(
+                                            ": ",
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                              child: Visibility(
+                                            visible: valueVisibleList[index],
+                                            child: Text(
+                                              "${mypost[boxSecond]}",
+                                              style: const TextStyle(
+                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                          ))
+                                        ],
                                       ),
                                     ),
                                   ),

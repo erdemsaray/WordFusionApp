@@ -14,13 +14,13 @@ class _AppDetailsPageState extends State<AppDetailsPage> {
 
   @override
   void initState() {
-    yonergeList.add("User can add new words from homepage and translation page.");
+    yonergeList.add("1. User can add new words from homepage and translation page.");
     yonergeList
-        .add("Words can be transferred between the word list and archive pages by clicking the transfer buttons.");
+        .add("2. Words can be transferred between the word list and archive pages by clicking the transfer buttons.");
     yonergeList.add(
-        "User can hide and show word meanings using buttons. In addition, the user can choose which side to hide.");
-    yonergeList.add("User can delete words by double clicking on them.");
-    yonergeList.add("At least 4 words must be added to the list for the speed test.");
+        "3. User can hide and show word meanings using buttons. In addition, the user can choose which side to hide.");
+    yonergeList.add("4. User can delete words by double clicking on them.");
+    yonergeList.add("5. At least 4 words must be added to the list for the speed test.");
     super.initState();
   }
 
@@ -31,7 +31,7 @@ class _AppDetailsPageState extends State<AppDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Usage Details"),
+        title: const Text("Usage Details"),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -44,25 +44,24 @@ class _AppDetailsPageState extends State<AppDetailsPage> {
             Colors.blue.shade900,
           ]),
         ),
-        child: Center(
-          child: Expanded(
-            child: SizedBox(
-              width: screenWidth,
-              child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) => const Divider(
-                  height: 40,
-                ),
-                shrinkWrap: true,
-                itemCount: yonergeList.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return Text(
-                    yonergeList[index],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 24),
-                  );
-                },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: SizedBox(
+            width: screenWidth,
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) => const Divider(
+                height: 24,
               ),
+              shrinkWrap: true,
+              itemCount: yonergeList.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Text(
+                  yonergeList[index],
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontSize: 24),
+                );
+              },
             ),
           ),
         ),

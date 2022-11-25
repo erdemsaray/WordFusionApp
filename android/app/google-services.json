@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "804868111526-8oaii51v3lda9c5n28a8ss2o9evcn28m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.funnywordslearn.app",
+            "certificate_hash": "9ed5968780f640ed056796e5b32ed7382e22cfc6"
+          }
+        },
+        {
           "client_id": "804868111526-chi1khrefe96rputditchvab1m1b7m96.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

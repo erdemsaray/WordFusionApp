@@ -1,5 +1,4 @@
 import 'package:firebase_login_project/service/auth.dart';
-import 'package:firebase_login_project/utils/project_variables.dart';
 
 import 'package:flutter/material.dart';
 
@@ -93,14 +92,14 @@ class NavigationDrawerWidget extends StatelessWidget {
 }
 
 Widget buildMenuItem({required String text, required IconData icon, required double size, VoidCallback? onClicked}) {
-  final color = Colors.white;
-  final hoverColor = Colors.white70;
+  const color = Colors.white;
+  const hoverColor = Colors.white70;
 
   return ListTile(
     leading: Icon(icon, color: color, size: size),
     title: Text(
       text,
-      style: TextStyle(color: color),
+      style: const TextStyle(color: color),
     ),
     hoverColor: hoverColor,
     onTap: onClicked,

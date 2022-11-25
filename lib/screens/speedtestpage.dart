@@ -90,6 +90,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
 
   @override
   void dispose() {
+    cevaplar.clear();
+
     super.dispose();
 
     deactivate();
@@ -97,7 +99,6 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       drawer: NavigationDrawerWidget(),
@@ -349,9 +350,9 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  Text("Time: ${kalanSure}"),
+                                  Text("Time: $kalanSure"),
                                   Text(
-                                    "Score: ${puan}",
+                                    "Score: $puan",
                                     style: TextStyle(color: scoreColor),
                                   ),
                                 ],

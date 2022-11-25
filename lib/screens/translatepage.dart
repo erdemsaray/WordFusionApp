@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:firebase_login_project/screens/speedtestpage.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 import '../utils/project_variables.dart';
@@ -131,7 +130,7 @@ class _TranslatePageState extends State<TranslatePage> {
                             children: [
                               Expanded(
                                 child: TextField(
-                                  scrollPhysics: BouncingScrollPhysics(),
+                                  scrollPhysics: const BouncingScrollPhysics(),
                                   controller: enterTextController,
                                   style: const TextStyle(
                                       fontSize: 36, fontWeight: FontWeight.bold, color: ColorItems.translateBlue),
@@ -263,7 +262,7 @@ class _TranslatePageState extends State<TranslatePage> {
       } else {
         _wordService.addWord(enterText, translatedTextController.text);
         attentionTextColor = Colors.yellow;
-        attentionText = 'Last added: ${enterText}';
+        attentionText = 'Last added: $enterText';
         emptyControl = true;
         enterTextController.clear();
       }

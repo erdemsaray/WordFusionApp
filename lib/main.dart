@@ -42,12 +42,12 @@ class MyApp extends StatelessWidget {
         routes: {
           '/homePage': (context) => const HomePage(),
           '/loginPage': (context) => const LoginPage(),
-          '/newUserPage': (context) => NewUserPage(),
+          '/newUserPage': (context) => const NewUserPage(),
           '/wordsPage': (context) => WordsPage(),
           '/translatePage': (context) => const TranslatePage(),
           '/speedTestPage': (context) => const SpeedTestPage(),
-          '/resetPasswordPage': (context) => ResetPasswordPage(),
-          '/memoryWordsPage': (context) => MemoryWordsPage(),
+          '/resetPasswordPage': (context) => const ResetPasswordPage(),
+          '/memoryWordsPage': (context) => const MemoryWordsPage(),
         });
   }
 }

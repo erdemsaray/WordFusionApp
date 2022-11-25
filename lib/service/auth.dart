@@ -10,7 +10,7 @@ class AuthService {
   Future<User?> signIn(String email, String password) async {
     try {
       var user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      print("SONUC: ${user.user}");
+      //print("SONUC: ${user.user}");
       return user.user;
     } catch (e) {
       return null;
@@ -36,7 +36,7 @@ class AuthService {
       );
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
-      print(e);
+      //print(e);
       return null;
     }
   }
